@@ -22,9 +22,9 @@ SIMILARITY_THRESHOLD = 0.7
 
 # API Keys
 #GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "AIzaSyCwSoZtRlXGqb3vI2bB_rZZTJ9eZGJKHlc")
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "AIzaSyD1Um89w6x8t-aNJO9D-hfpVLLgmgX5Ajg")
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "***")
 SUPABASE_URL = os.getenv("SUPABASE_URL", "https://oldmdsztelannvpymokv.supabase.co")
-SUPABASE_KEY = os.getenv("SUPABASE_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9sZG1kc3p0ZWxhbm52cHltb2t2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI5NTYzOTAsImV4cCI6MjA3ODUzMjM5MH0.tzmLOKxV0XaJlVqaKVIimlnRBC8I6Gk_O7HuoLDfoyM")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY", "***")
 
 # Model
 EMBEDDING_MODEL = "intfloat/e5-base-v2"
@@ -32,4 +32,5 @@ CAPTION_MODEL = "Salesforce/blip-image-captioning-large"
 LLM_MODEL = "gemini-2.5-flash"
 
 # Ensure base directory exists
+
 os.makedirs(BASE_DIR, exist_ok=True)
