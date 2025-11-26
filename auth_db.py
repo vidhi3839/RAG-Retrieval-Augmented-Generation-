@@ -13,15 +13,20 @@ def hash_password(password):
     """Hash password using SHA-256."""
     return hashlib.sha256(password.encode()).hexdigest()
 
-def create_user(username, password):
-    """Create a new user in the database."""
+def create_user(username, password, display_name=None):
+    """Create a new user in the database with optional display name."""
     try:
         supabase: Client = get_supabase_client()
         password_hash = hash_password(password)
         
+        if not display_name:
+            display_name = username.split("@")[0] if "@" in username else username
+        
         payload = {
             "username": username,
-            "password_hash": password_hash
+            "email": username,  
+            "password_hash": password_hash,
+            "display_name": display_name
         }
         
         result = supabase.table("users").insert(payload).execute()
@@ -31,7 +36,7 @@ def create_user(username, password):
         if "duplicate key" in error_msg.lower() or "unique" in error_msg.lower():
             return {"success": False, "error": "Username already exists"}
         return {"success": False, "error": str(e)}
-
+    
 def verify_user(username, password):
     """Verify user credentials."""
     try:
@@ -57,17 +62,17 @@ def verify_user(username, password):
     except Exception as e:
         return {"success": False, "error": str(e)}
 
-def create_session(user_id, username):
+def create_session(user_id, display_name):
     """Create a new session for the user."""
     try:
         supabase: Client = get_supabase_client()
         
         session_token = str(uuid.uuid4())
-        expires_at = datetime.now() + timedelta(days=7)  # Session valid for 7 days
+        expires_at = datetime.now() + timedelta(days=7) 
         
         payload = {
             "user_id": user_id,
-            "username": username,
+            "username": display_name, 
             "session_token": session_token,
             "expires_at": expires_at.isoformat(),
             "is_active": True
@@ -77,7 +82,7 @@ def create_session(user_id, username):
         return {"success": True, "session": result.data[0], "token": session_token}
     except Exception as e:
         return {"success": False, "error": str(e)}
-
+    
 def validate_session(session_token):
     """Validate if a session is still active and not expired."""
     try:

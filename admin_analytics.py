@@ -192,22 +192,54 @@ def get_query_success_metrics():
 # SQL QUERY 6: Embedding Similarity Distribution
 # ============================================
 def get_similarity_distribution():
-    """Get distribution of similarity scores - FIXED VERSION."""
+    """Get distribution of similarity scores (cosine similarity) - ENHANCED VERSION."""
     try:
         supabase = get_supabase_client()
         
-        result = supabase.table("retrieval_logs").select("similarity_score").execute()
+        result = supabase.table("retrieval_logs").select(
+            "similarity_score, query_id, doc_id, filename"
+        ).execute()
         
         if not result.data:
             return pd.DataFrame()
         
         df = pd.DataFrame(result.data)
+        
+        # Add cosine similarity bins for analysis
+        df['cosine_similarity'] = df['similarity_score']  # Clarify this is cosine similarity
+        df['similarity_bin'] = pd.cut(
+            df['cosine_similarity'],
+            bins=[0, 0.3, 0.5, 0.7, 0.85, 1.0],
+            labels=['Very Low (0-0.3)', 'Low (0.3-0.5)', 'Medium (0.5-0.7)', 
+                    'High (0.7-0.85)', 'Very High (0.85-1.0)']
+        )
+        
         return df
         
     except Exception as e:
         print(f"Error in get_similarity_distribution: {e}")
         return pd.DataFrame()
 
+def get_cosine_similarity_stats(df):
+    """Calculate detailed cosine similarity statistics."""
+    if df.empty:
+        return {}
+    
+    stats = {
+        'mean': df['cosine_similarity'].mean(),
+        'median': df['cosine_similarity'].median(),
+        'std': df['cosine_similarity'].std(),
+        'min': df['cosine_similarity'].min(),
+        'max': df['cosine_similarity'].max(),
+        'q25': df['cosine_similarity'].quantile(0.25),
+        'q75': df['cosine_similarity'].quantile(0.75),
+        'very_high_count': len(df[df['cosine_similarity'] >= 0.85]),
+        'high_count': len(df[(df['cosine_similarity'] >= 0.7) & (df['cosine_similarity'] < 0.85)]),
+        'medium_count': len(df[(df['cosine_similarity'] >= 0.5) & (df['cosine_similarity'] < 0.7)]),
+        'low_count': len(df[(df['cosine_similarity'] >= 0.3) & (df['cosine_similarity'] < 0.5)]),
+        'very_low_count': len(df[df['cosine_similarity'] < 0.3])
+    }
+    return stats
 # ============================================
 # SQL QUERY 7: User Interaction Frequency
 # ============================================
@@ -451,24 +483,92 @@ def plot_confidence_trends(df):
     return fig
 
 def plot_similarity_distribution(df):
-    """Plot similarity score distribution."""
+    """Plot cosine similarity score distribution with enhanced analysis."""
     if df.empty:
         return None
     
-    fig = go.Figure()
+    # Create subplots
+    fig = make_subplots(
+        rows=2, cols=2,
+        subplot_titles=(
+            'Cosine Similarity Distribution',
+            'Cosine Similarity by Bin',
+            'Cosine Similarity Box Plot',
+            'Cumulative Distribution'
+        ),
+        specs=[[{"type": "histogram"}, {"type": "bar"}],
+               [{"type": "box"}, {"type": "scatter"}]]
+    )
     
-    fig.add_trace(go.Histogram(
-        x=df['similarity_score'],
-        nbinsx=30,
-        name='Similarity Scores',
-        marker_color='lightblue'
-    ))
+    # 1. Histogram
+    fig.add_trace(
+        go.Histogram(
+            x=df['cosine_similarity'],
+            nbinsx=30,
+            name='Cosine Similarity',
+            marker_color='lightblue',
+            showlegend=False
+        ),
+        row=1, col=1
+    )
+    
+    # 2. Bar chart by bins
+    bin_counts = df['similarity_bin'].value_counts().sort_index()
+    fig.add_trace(
+        go.Bar(
+            x=bin_counts.index.astype(str),
+            y=bin_counts.values,
+            name='Count by Bin',
+            marker_color='lightcoral',
+            text=bin_counts.values,
+            textposition='outside',
+            showlegend=False
+        ),
+        row=1, col=2
+    )
+    
+    # 3. Box plot
+    fig.add_trace(
+        go.Box(
+            y=df['cosine_similarity'],
+            name='Cosine Similarity',
+            marker_color='lightgreen',
+            showlegend=False
+        ),
+        row=2, col=1
+    )
+    
+    # 4. Cumulative distribution
+    sorted_scores = np.sort(df['cosine_similarity'])
+    cumulative = np.arange(1, len(sorted_scores) + 1) / len(sorted_scores) * 100
+    fig.add_trace(
+        go.Scatter(
+            x=sorted_scores,
+            y=cumulative,
+            mode='lines',
+            name='Cumulative %',
+            line=dict(color='purple', width=2),
+            showlegend=False
+        ),
+        row=2, col=2
+    )
+    
+    # Update axes labels
+    fig.update_xaxes(title_text="Cosine Similarity", row=1, col=1)
+    fig.update_yaxes(title_text="Frequency", row=1, col=1)
+    
+    fig.update_xaxes(title_text="Similarity Range", row=1, col=2)
+    fig.update_yaxes(title_text="Count", row=1, col=2)
+    
+    fig.update_yaxes(title_text="Cosine Similarity", row=2, col=1)
+    
+    fig.update_xaxes(title_text="Cosine Similarity", row=2, col=2)
+    fig.update_yaxes(title_text="Cumulative %", row=2, col=2)
     
     fig.update_layout(
-        title='Distribution of Similarity Scores',
-        xaxis_title='Similarity Score',
-        yaxis_title='Frequency',
-        height=400
+        height=800,
+        showlegend=False,
+        title_text="Cosine Similarity Analysis"
     )
     
     return fig
@@ -537,7 +637,6 @@ def show_admin_dashboard():
         
         with col4:
             st.metric("High Confidence Rate", f"{metrics.get('high_confidence_rate', 0):.1f}%")
-            st.metric("Avg Sources/Query", f"{metrics.get('avg_sources_per_query', 0):.1f}")
     else:
         st.info("No data available yet. Start using the system to generate metrics!")
     
@@ -622,19 +721,45 @@ def show_admin_dashboard():
     
     # Tab 6: Similarity Distribution
     with tabs[5]:
-        st.markdown("### SQL Query 6: Embedding Similarity Distribution")
+        st.markdown("### SQL Query 6: Embedding Cosine Similarity Distribution")
+        st.markdown("*Cosine similarity measures the angular distance between query and document embeddings (range: -1 to 1, higher is better)*")
+        
         with st.spinner("Loading data..."):
             df6 = get_similarity_distribution()
+        
         if not df6.empty:
+            # Enhanced visualization
             st.plotly_chart(plot_similarity_distribution(df6), use_container_width=True)
             
-            col1, col2, col3 = st.columns(3)
+            # Detailed statistics
+            st.markdown("####  Cosine Similarity Statistics")
+            stats = get_cosine_similarity_stats(df6)
+            
+            col1, col2, col3, col4, col5 = st.columns(5)
             with col1:
-                st.metric("Mean Similarity", f"{df6['similarity_score'].mean():.3f}")
+                st.metric("Mean", f"{stats['mean']:.3f}")
+                st.metric("Std Dev", f"{stats['std']:.3f}")
             with col2:
-                st.metric("Median Similarity", f"{df6['similarity_score'].median():.3f}")
+                st.metric("Median", f"{stats['median']:.3f}")
+                st.metric("Min", f"{stats['min']:.3f}")
             with col3:
-                st.metric("Std Dev", f"{df6['similarity_score'].std():.3f}")
+                st.metric("Q1 (25%)", f"{stats['q25']:.3f}")
+                st.metric("Q3 (75%)", f"{stats['q75']:.3f}")
+            with col4:
+                st.metric("Max", f"{stats['max']:.3f}")
+                st.metric("Total Retrievals", f"{len(df6)}")
+            with col5:
+                st.metric("Very High (≥0.85)", f"{stats['very_high_count']}")
+                st.metric("High (0.7-0.85)", f"{stats['high_count']}")
+            
+            
+            # Show detailed data
+            st.markdown("#### Detailed Data")
+            display_df = df6[['filename', 'cosine_similarity', 'similarity_bin']].sort_values(
+                'cosine_similarity', ascending=False
+            )
+            st.dataframe(display_df, use_container_width=True)
+            
         else:
             st.info("No data available yet")
     

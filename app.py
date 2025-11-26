@@ -204,8 +204,18 @@ def load_css():
     .st-emotion-cache-qcpnpn button{
         width: 100px !important;
     }
-                
-      .st-emotion-cache-qcpnpn label{
+
+        .st-emotion-cache-qcpnpn button:hover{
+        width: 100px !important;
+        color: #e3f2fd !important;
+        border-color: #e3f2fd !important;
+    }  
+                        .st-emotion-cache-qcpnpn button::after{
+        width: 100px !important;
+        color: #e3f2fd !important;
+        border-color: #e3f2fd !important;
+    }         
+    .st-emotion-cache-qcpnpn label{
             color: #F3F3E0 !important;
                 }
                 
@@ -223,7 +233,12 @@ def load_css():
                 .st-emotion-cache-14553y9{
                 color: white !important;
                 }
-
+.st-emotion-cache-14553y9 p:hover{
+                color: black !important;
+                }
+        .st-emotion-cache-kgpedg {
+                padding-top:30px !important;
+            }        
  /* Action buttons (Get Answer, Process Documents) - Gradient style */
     button[kind="primary"] {
         background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%) !important;
@@ -247,6 +262,7 @@ def load_css():
         box-shadow: 0 6px 16px rgba(66, 165, 245, 0.3) !important;
     }
 
+                
 /* File Uploader - Styled like Answer Box */
 [data-testid="stFileUploader"] {
     background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%) !important;
@@ -321,9 +337,9 @@ def load_css():
                 background-color: white !important;
         color: #133E87 !important;
         }
-                
-      
-    
+    .st-e2 {
+    background-color: black !important;
+}       
                                 </style>
     """, unsafe_allow_html=True)
 
@@ -639,6 +655,9 @@ def show_main_app():
             st.rerun()
         st.markdown("</div>", unsafe_allow_html=True)
 
+    if is_admin and st.session_state.current_page == "analytics":
+        show_admin_dashboard()
+        return
     
     # MAIN DASHBOARD
     st.markdown("<h1 style='text-align: center; color: #F3F3E0;'>RAG Intelligence System</h1>", unsafe_allow_html=True)
@@ -725,8 +744,7 @@ def show_main_app():
                     new_chunks.extend(chunks)
 
                     log_document_to_db(doc_meta, len(chunks), username=st.session_state.display_name)
-                    st.success(f"✅ {file.name}: {len(chunks)} chunks created")
-
+                    
                 except Exception as e:
                     st.error(f"❌ Error processing {file.name}: {str(e)}")
                     traceback.print_exc()
@@ -736,13 +754,13 @@ def show_main_app():
             all_chunks.extend(new_chunks)
             save_index_and_chunks(all_docs, all_chunks)
 
-            status_text.text("Updating FAISS index...")
+            status_text.text("Processing...")
             try:
                 build_faiss_index(new_chunks, append=True)
                 st.session_state.faiss_ready = True
                 load_existing_data()
 
-                status_text.text("✅ All documents processed!")
+                status_text.text(" All documents processed!")
 
             except Exception as e:
                 st.error(f"Error building FAISS index: {e}")
