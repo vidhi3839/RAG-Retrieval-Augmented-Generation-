@@ -113,6 +113,10 @@ def load_css():
         font-weight: 500 !important;
     }
     
+    .st-emotion-cache-kgpedg{
+                margin: -30px !important;
+    }
+                
     div[data-baseweb="input"] {
         background-color: transparent !important;
         border: none !important;
@@ -193,12 +197,13 @@ def load_css():
         line-height: 1.8;
     }
     
-                    .st-emotion-cache-qcpnpn {
-                border: none !important;
-                }
-.st-emotion-cache-qcpnpn button{
-            width: 100px !important;
-                }
+    .st-emotion-cache-qcpnpn {
+        border: none !important;
+    }
+
+    .st-emotion-cache-qcpnpn button{
+        width: 100px !important;
+    }
                 
       .st-emotion-cache-qcpnpn label{
             color: #F3F3E0 !important;
@@ -206,7 +211,41 @@ def load_css():
                 
        .st-emotion-cache-qcpnpn imput{
             color: #091057 !important;
-                }         
+                }  
+
+    .st-eb:hover{
+                color: black !important;
+                }       
+
+    .st-ef {
+    background-color: black !important;
+}
+                .st-emotion-cache-14553y9{
+                color: white !important;
+                }
+
+ /* Action buttons (Get Answer, Process Documents) - Gradient style */
+    button[kind="primary"] {
+        background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%) !important;
+        color: #1565c0 !important;
+        border: none !important;
+        border-radius: 12px !important;
+        padding: 12px 24px !important;
+        font-size: 15px !important;
+        font-weight: 600 !important;
+        width: auto !important;
+        height: auto !important;
+        margin-left: 85% !important;
+        box-shadow: 0 4px 12px rgba(66, 165, 245, 0.2) !important;
+        transition: all 0.3s ease !important;
+        border-left: 4px solid #42a5f5 !important;
+    }
+            
+    button[kind="primary"]:hover {
+        background: linear-gradient(135deg, #bbdefb 0%, #90caf9 100%) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 16px rgba(66, 165, 245, 0.3) !important;
+    }
 
 /* File Uploader - Styled like Answer Box */
 [data-testid="stFileUploader"] {
@@ -276,8 +315,14 @@ def load_css():
 
     .st-emotion-cache-s1invk:hover{
                 color: black !important;
+            
                 }            
-    
+    .st-d1{
+                background-color: white !important;
+        color: #133E87 !important;
+        }
+                
+      
     
                                 </style>
     """, unsafe_allow_html=True)
@@ -516,17 +561,8 @@ def get_user_query_history(username, limit=None):
 def show_main_app():
     st.markdown("""
     <style>
-    /* Logout button styling */
-    .logout-btn button {
-        width: auto !important;
-        float: left !important;
-        background-color: #c62828 !important;
-        color: white !important;
-        border-radius: 8px !important;
-        padding: 0.4rem 1rem !important;
-        margin-left: 0px !important;
-    }
     
+          
     /* Sidebar navigation buttons - LEFT ALIGNED */
     [data-testid="stSidebar"] .stButton button {
         text-align: center !important;
@@ -534,14 +570,16 @@ def show_main_app():
         padding-left: 1rem !important;
         width: 100% !important;
         margin-left: 0px !important;
-        background-color: #F3F3E0 !important;
-        color: #000 !important;
+        background-color: transparent !important;
+        color: #fff !important;
     }
     
     /* Override center alignment for sidebar buttons */
     [data-testid="stSidebar"] .stButton {
         text-align: left !important;
     }
+    
+
     </style>
                 
     
@@ -601,16 +639,7 @@ def show_main_app():
             st.rerun()
         st.markdown("</div>", unsafe_allow_html=True)
 
-    # Route to analytics
-    if st.session_state.current_page == "analytics":
-        if not is_admin:
-            st.error("⛔ Access Denied: Admin privileges required")
-            st.info("This page is only accessible to administrators.")
-            st.session_state.current_page = "main"
-            return
-        show_admin_dashboard()
-        return
-
+    
     # MAIN DASHBOARD
     st.markdown("<h1 style='text-align: center; color: #F3F3E0;'>RAG Intelligence System</h1>", unsafe_allow_html=True)
     st.markdown(f"<p style='text-align: center; color: #F3F3E0; font-size: 24px;'>Welcome, {st.session_state.display_name}! 👋</p>", unsafe_allow_html=True)
