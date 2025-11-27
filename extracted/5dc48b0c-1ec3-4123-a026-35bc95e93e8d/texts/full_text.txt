@@ -1,0 +1,89 @@
+Machine Learning Terminology Glossary
+
+Activation Function: Non-linear function applied to neuron outputs in neural networks. Common types include ReLU, Sigmoid, and Tanh.
+
+Backpropagation: Algorithm for training neural networks by calculating gradients of loss function with respect to weights using the chain rule.
+
+Batch Size: Number of training samples used in one iteration of gradient descent. Common values are 32, 64, 128, and 256.
+
+Categorical Variable: Feature that can take on one of a limited set of discrete values, like color or country.
+
+Classification: Supervised learning task where the target variable is discrete or categorical.
+
+Clustering: Unsupervised learning task that groups similar data points together.
+
+Confusion Matrix: Table showing true positives, true negatives, false positives, and false negatives for classification models.
+
+Convolutional Neural Network (CNN): Type of neural network designed for processing grid-like data such as images.
+
+Cross-Entropy Loss: Loss function commonly used for classification problems, particularly with softmax activation.
+
+Data Augmentation: Technique to increase training data size by creating modified versions of existing data, commonly used in computer vision.
+
+Dimensionality Reduction: Process of reducing the number of features while retaining important information. Examples include PCA and t-SNE.
+
+Embedding: Dense vector representation of discrete variables, commonly used for words in NLP.
+
+Ensemble Methods: Combining multiple models to improve predictions. Examples include Random Forest and Gradient Boosting.
+
+Epoch: One complete pass through the entire training dataset during model training.
+
+Feature: Individual measurable property or characteristic of a phenomenon being observed, also called attribute or variable.
+
+Feature Engineering: Process of creating new features from raw data using domain knowledge to improve model performance.
+
+Gradient: Vector of partial derivatives indicating the direction of steepest increase of a function.
+
+Hyperparameter: Parameter whose value is set before training begins, such as learning rate or number of layers.
+
+Inference: Process of using a trained model to make predictions on new data.
+
+Label: Target variable or output in supervised learning, the value we want to predict.
+
+Learning Rate: Hyperparameter controlling the step size in gradient descent optimization. Typical values range from 0.001 to 0.1.
+
+Logistic Regression: Classification algorithm that models probability of binary outcomes using the logistic function.
+
+Loss Function: Function that measures how well model predictions match actual values. Examples include MSE for regression and Cross-Entropy for classification.
+
+Neural Network: Computing system inspired by biological neural networks, consisting of interconnected nodes (neurons) organized in layers.
+
+Normalization: Scaling features to a fixed range, typically 0 to 1. Formula: (X - X_min) / (X_max - X_min).
+
+One-Hot Encoding: Converting categorical variables into binary vectors where each category becomes a separate column.
+
+Optimizer: Algorithm used to update model parameters to minimize loss function. Examples include SGD, Adam, and RMSprop.
+
+Outlier: Data point that differs significantly from other observations, potentially affecting model performance.
+
+Parameter: Variable in the model that is learned from training data, such as weights in neural networks.
+
+Precision: Metric measuring the proportion of positive predictions that were correct. Formula: TP / (TP + FP).
+
+Recall: Metric measuring the proportion of actual positives correctly identified. Formula: TP / (TP + FN). Also called Sensitivity.
+
+Recurrent Neural Network (RNN): Neural network architecture designed for sequential data like text or time series.
+
+Regularization: Technique to prevent overfitting by adding penalty for model complexity to the loss function.
+
+Regression: Supervised learning task where the target variable is continuous.
+
+Reinforcement Learning: Learning paradigm where an agent learns by interacting with environment and receiving rewards or penalties.
+
+Silhouette Score: Metric for evaluating clustering quality, ranging from -1 to 1. Higher values indicate better-defined clusters.
+
+Standardization: Scaling features to have mean 0 and standard deviation 1. Formula: (X - mean) / std.
+
+Supervised Learning: Learning from labeled training data where both inputs and desired outputs are provided.
+
+Training Set: Portion of data used to train the model, typically 70-80 percent of total data.
+
+Transfer Learning: Reusing a model trained on one task as starting point for a model on a second related task.
+
+Underfitting: When a model is too simple to capture underlying patterns in data, resulting in poor performance on both training and test data.
+
+Unsupervised Learning: Learning from unlabeled data where only input features are provided without target outputs.
+
+Validation Set: Portion of data used to tune hyperparameters and make decisions during model development.
+
+Variance: Measure of how spread out data is from the mean. Also refers to error component in bias-variance tradeoff.

@@ -1,0 +1,295 @@
+Machine Learning Fundamentals
+
+What is Machine Learning?
+
+Machine Learning is a subset of artificial intelligence that enables systems to learn and improve from experience without being explicitly programmed. It focuses on developing computer programs that can access data and use it to learn for themselves.
+
+Types of Machine Learning
+
+1. Supervised Learning
+Supervised learning uses labeled training data. The algorithm learns from input-output pairs.
+
+Common algorithms:
+Linear Regression: Predicts continuous values
+Logistic Regression: Binary classification
+Decision Trees: Tree-based classification/regression
+Random Forest: Ensemble of decision trees
+Support Vector Machines (SVM): Finds optimal hyperplane
+Neural Networks: Deep learning models
+
+Use cases:
+Email spam detection
+House price prediction
+Image classification
+Credit risk assessment
+
+2. Unsupervised Learning
+Unsupervised learning works with unlabeled data. The algorithm finds hidden patterns.
+
+Common algorithms:
+K-Means Clustering: Groups similar data points
+Hierarchical Clustering: Creates cluster hierarchy
+DBSCAN: Density-based clustering
+Principal Component Analysis (PCA): Dimensionality reduction
+Autoencoders: Neural network-based feature learning
+
+Use cases:
+Customer segmentation
+Anomaly detection
+Recommendation systems
+Data compression
+
+3. Reinforcement Learning
+The agent learns by interacting with an environment and receiving rewards or penalties.
+
+Key concepts:
+Agent: The learner or decision maker
+Environment: What the agent interacts with
+State: Current situation
+Action: What the agent can do
+Reward: Feedback from environment
+Policy: Strategy the agent follows
+
+Common algorithms:
+Q-Learning
+Deep Q-Networks (DQN)
+Policy Gradient Methods
+Actor-Critic Methods
+
+Use cases:
+Game playing (AlphaGo, Chess)
+Robotics control
+Autonomous vehicles
+Resource optimization
+
+Key Concepts
+
+Bias-Variance Tradeoff
+High Bias: Model is too simple (underfitting)
+High Variance: Model is too complex (overfitting)
+Goal: Find optimal balance
+
+Overfitting vs Underfitting
+Overfitting: Model memorizes training data, performs poorly on new data
+Solutions: Regularization, cross-validation, more training data, reduce features
+
+Underfitting: Model is too simple to capture patterns
+Solutions: Add features, increase model complexity, reduce regularization
+
+Train-Test Split
+Standard practice: 80% training, 20% testing
+Validation set: Often use 60-20-20 split (train-validation-test)
+Purpose: Evaluate generalization performance
+
+Cross-Validation
+K-Fold Cross-Validation: Split data into K folds, train K times
+Typical K values: 5 or 10
+Advantage: Uses all data for both training and validation
+Result: More robust performance estimate
+
+Regularization
+Purpose: Prevent overfitting by penalizing complex models
+
+L1 Regularization (Lasso):
+Penalty: Sum of absolute values of weights
+Effect: Can zero out some features (feature selection)
+Formula: Loss + lambda * Sum of absolute weights
+
+L2 Regularization (Ridge):
+Penalty: Sum of squared weights
+Effect: Shrinks all weights toward zero
+Formula: Loss + lambda * Sum of squared weights
+
+Elastic Net: Combination of L1 and L2
+
+Feature Engineering
+Process of creating new features from raw data
+
+Common techniques:
+1. Polynomial features: x, x squared, x cubed
+2. Interaction terms: x1 times x2
+3. Binning: Converting continuous to categorical
+4. Log transformation: log(x) for skewed data
+5. One-hot encoding: For categorical variables
+6. Feature scaling: Normalization or standardization
+
+Gradient Descent
+Optimization algorithm to minimize loss function
+
+How it works:
+1. Start with random weights
+2. Calculate gradient (slope) of loss function
+3. Update weights in opposite direction of gradient
+4. Repeat until convergence
+
+Learning rate: Step size for updates
+Too large: May overshoot minimum
+Too small: Slow convergence
+
+Variants:
+Batch Gradient Descent: Uses all training data
+Stochastic Gradient Descent (SGD): Uses one sample at a time
+Mini-batch Gradient Descent: Uses subset of data (typical: 32, 64, 128)
+
+Evaluation Metrics
+
+For Classification
+
+Confusion Matrix:
+                    Predicted Positive      Predicted Negative
+Actual Positive     True Positive (TP)      False Negative (FN)
+Actual Negative     False Positive (FP)     True Negative (TN)
+
+Accuracy = (TP + TN) / (TP + TN + FP + FN)
+Use when: Classes are balanced
+Range: 0 to 1 (higher is better)
+
+Precision = TP / (TP + FP)
+Measures: How many predicted positives are actually positive
+Use when: False positives are costly
+
+Recall (Sensitivity) = TP / (TP + FN)
+Measures: How many actual positives were found
+Use when: False negatives are costly
+
+F1-Score = 2 times (Precision times Recall) divided by (Precision plus Recall)
+Harmonic mean of precision and recall
+Use when: Need balance between precision and recall
+
+ROC Curve: Plot of True Positive Rate vs False Positive Rate
+AUC (Area Under Curve): Ranges from 0 to 1 (higher is better)
+0.5: Random classifier
+1.0: Perfect classifier
+
+For Regression
+
+Mean Absolute Error (MAE) = Average of absolute differences between true and predicted
+Easy to interpret
+Same units as target variable
+Less sensitive to outliers
+
+Mean Squared Error (MSE) = Average of squared differences
+Penalizes large errors more
+Not in original units
+Sensitive to outliers
+
+Root Mean Squared Error (RMSE) = Square root of MSE
+In original units
+More interpretable than MSE
+
+R-squared = 1 minus (residual sum of squares divided by total sum of squares)
+Range: Negative infinity to 1
+1.0: Perfect fit
+0.0: Model as good as mean
+Negative: Model worse than mean
+
+Data Preprocessing
+
+Handling Missing Data
+1. Delete rows or columns (if less than 5% missing)
+2. Mean or Median imputation (for numerical)
+3. Mode imputation (for categorical)
+4. Forward or Backward fill (for time series)
+5. Model-based imputation (KNN, regression)
+
+Handling Outliers
+Detection methods:
+Z-score: absolute value greater than 3 is outlier
+IQR method: Q1 minus 1.5 times IQR or Q3 plus 1.5 times IQR
+Visualization: Box plots, scatter plots
+
+Treatment:
+Remove outliers
+Cap at threshold (winsorization)
+Transform data (log, square root)
+Use robust algorithms (tree-based)
+
+Feature Scaling
+
+Normalization (Min-Max Scaling):
+X_scaled = (X - X_min) / (X_max - X_min)
+Result: Values in range 0 to 1
+Use for: Neural networks, KNN
+
+Standardization (Z-score):
+X_scaled = (X - mean) / standard deviation
+Result: Mean equals 0, Standard deviation equals 1
+Use for: Linear regression, logistic regression, SVM
+
+When to scale:
+Distance-based algorithms: Always
+Tree-based algorithms: Not necessary
+Neural networks: Always
+Linear models: Usually beneficial
+
+Handling Imbalanced Data
+Problem: One class has much fewer samples
+
+Solutions:
+1. Resampling:
+   Oversampling: Duplicate minority class (SMOTE)
+   Undersampling: Remove majority class samples
+   
+2. Algorithmic approaches:
+   Class weights: Penalize misclassification of minority class
+   Threshold adjustment: Change classification threshold
+   
+3. Evaluation:
+   Do not use accuracy
+   Use F1-score, precision-recall, AUC-ROC
+
+Common Pitfalls
+
+1. Data Leakage: Using test data information in training
+2. Look-ahead Bias: Using future information
+3. Not scaling features for distance-based algorithms
+4. Using accuracy for imbalanced datasets
+5. Not setting random seed for reproducibility
+6. Training on entire dataset without validation
+7. Ignoring domain knowledge in feature engineering
+8. Over-relying on complex models for small datasets
+
+Model Selection Guide
+
+Dataset size:
+Small (less than 1K): Linear models, Naive Bayes
+Medium (1K to 100K): SVM, Random Forest
+Large (greater than 100K): Neural Networks, Gradient Boosting
+
+Interpretability needs:
+High: Linear Regression, Decision Trees
+Medium: Random Forest (feature importance)
+Low: Neural Networks, XGBoost
+
+Training time constraints:
+Fast needed: Linear models, Naive Bayes
+Medium: Decision Trees, SVM
+Slow acceptable: Neural Networks, Ensemble methods
+
+Data type:
+Numerical: Any algorithm
+Categorical: Tree-based, Naive Bayes
+Text: Naive Bayes, Neural Networks
+Images: Convolutional Neural Networks
+Time series: LSTM, ARIMA
+
+Hyperparameter Tuning
+
+Methods:
+1. Grid Search: Try all combinations
+   Pros: Exhaustive, guaranteed to find best in grid
+   Cons: Computationally expensive
+
+2. Random Search: Try random combinations
+   Pros: More efficient than grid search
+   Cons: May miss optimal combination
+
+3. Bayesian Optimization: Use probabilistic model
+   Pros: Most efficient, fewer iterations
+   Cons: More complex to implement
+
+Common hyperparameters:
+Learning rate: 0.001, 0.01, 0.1
+Tree depth: 3, 5, 10, 20
+Number of trees: 50, 100, 200, 500
+Regularization: 0.001, 0.01, 0.1, 1.0

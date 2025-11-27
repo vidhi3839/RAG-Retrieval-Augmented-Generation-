@@ -1,0 +1,8 @@
+Dataset_Name,Samples,Features,Classes,Missing_Values_Pct,Imbalanced,Domain
+Iris,150,4,3,0,No,Botany
+Wine,178,13,3,0,No,Chemistry
+Breast Cancer,569,30,2,0,Yes,Medical
+Digits,1797,64,10,0,No,Computer Vision
+Diabetes,768,8,2,0,Yes,Medical
+Boston Housing,506,13,NA,0,NA,Real Estate
+MNIST,70000,784,10,0,No,Computer Vision

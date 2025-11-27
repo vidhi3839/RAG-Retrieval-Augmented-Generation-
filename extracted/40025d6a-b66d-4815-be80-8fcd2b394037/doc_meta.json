@@ -1,0 +1,11 @@
+{
+  "doc_id": "40025d6a-b66d-4815-be80-8fcd2b394037",
+  "filename": "iris_dataset.csv",
+  "ext": ".csv",
+  "base_dir": "extracted\\40025d6a-b66d-4815-be80-8fcd2b394037",
+  "text_files_count": 1,
+  "tables_count": 1,
+  "images_count": 0,
+  "uploaded_by": "Test",
+  "text_path": "extracted\\40025d6a-b66d-4815-be80-8fcd2b394037\\texts\\full_text.txt"
+}

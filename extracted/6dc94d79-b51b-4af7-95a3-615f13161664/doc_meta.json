@@ -1,0 +1,11 @@
+{
+  "doc_id": "6dc94d79-b51b-4af7-95a3-615f13161664",
+  "filename": "ds_salaries.csv",
+  "ext": ".csv",
+  "base_dir": "extracted\\6dc94d79-b51b-4af7-95a3-615f13161664",
+  "text_files_count": 1,
+  "tables_count": 1,
+  "images_count": 0,
+  "uploaded_by": "Test",
+  "text_path": "extracted\\6dc94d79-b51b-4af7-95a3-615f13161664\\texts\\full_text.txt"
+}

@@ -1,0 +1,258 @@
+# Table: ds_salaries.csv
+
+This table contains 12 rows and 7 columns.
+
+## Columns in this table:
+1. Job_Title (text)
+2. Experience_Level (text)
+3. Salary_USD (numeric)
+4. Location (text)
+5. Company_Size (text)
+6. Remote_Ratio (numeric)
+7. Year (numeric)
+
+## Data entries (described row by row):
+
+**Data Scientist**:
+  - Experience_Level: Entry
+  - Salary_USD: 65000
+  - Location: USA
+  - Company_Size: Small
+  - Remote_Ratio: 0
+  - Year: 2023
+
+**Data Scientist**:
+  - Experience_Level: Mid
+  - Salary_USD: 95000
+  - Location: USA
+  - Company_Size: Medium
+  - Remote_Ratio: 50
+  - Year: 2023
+
+**Data Scientist**:
+  - Experience_Level: Senior
+  - Salary_USD: 135000
+  - Location: USA
+  - Company_Size: Large
+  - Remote_Ratio: 100
+  - Year: 2023
+
+**ML Engineer**:
+  - Experience_Level: Entry
+  - Salary_USD: 75000
+  - Location: USA
+  - Company_Size: Small
+  - Remote_Ratio: 0
+  - Year: 2023
+
+**ML Engineer**:
+  - Experience_Level: Mid
+  - Salary_USD: 110000
+  - Location: USA
+  - Company_Size: Medium
+  - Remote_Ratio: 50
+  - Year: 2023
+
+**ML Engineer**:
+  - Experience_Level: Senior
+  - Salary_USD: 155000
+  - Location: USA
+  - Company_Size: Large
+  - Remote_Ratio: 100
+  - Year: 2023
+
+**Data Analyst**:
+  - Experience_Level: Entry
+  - Salary_USD: 55000
+  - Location: USA
+  - Company_Size: Small
+  - Remote_Ratio: 0
+  - Year: 2023
+
+**Data Analyst**:
+  - Experience_Level: Mid
+  - Salary_USD: 75000
+  - Location: USA
+  - Company_Size: Medium
+  - Remote_Ratio: 50
+  - Year: 2023
+
+**Data Analyst**:
+  - Experience_Level: Senior
+  - Salary_USD: 95000
+  - Location: USA
+  - Company_Size: Large
+  - Remote_Ratio: 100
+  - Year: 2023
+
+**Data Engineer**:
+  - Experience_Level: Entry
+  - Salary_USD: 70000
+  - Location: USA
+  - Company_Size: Small
+  - Remote_Ratio: 0
+  - Year: 2023
+
+**Data Engineer**:
+  - Experience_Level: Mid
+  - Salary_USD: 105000
+  - Location: USA
+  - Company_Size: Medium
+  - Remote_Ratio: 50
+  - Year: 2023
+
+**Data Engineer**:
+  - Experience_Level: Senior
+  - Salary_USD: 145000
+  - Location: USA
+  - Company_Size: Large
+  - Remote_Ratio: 100
+  - Year: 2023
+
+## Numeric Insights:
+
+### Salary_USD:
+- Lowest value: 55000 (for Data Analyst)
+- Highest value: 155000 (for ML Engineer)
+- Average: 98333.33
+- Total: 1180000.00
+- Sorted from lowest to highest:
+  1. Data Analyst: 55000
+  2. Data Scientist: 65000
+  3. Data Engineer: 70000
+  4. ML Engineer: 75000
+  5. Data Analyst: 75000
+- Sorted from highest to lowest:
+  1. ML Engineer: 155000
+  2. Data Engineer: 145000
+  3. Data Scientist: 135000
+  4. ML Engineer: 110000
+  5. Data Engineer: 105000
+
+### Remote_Ratio:
+- Lowest value: 0 (for Data Scientist)
+- Highest value: 100 (for Data Scientist)
+- Average: 50.00
+- Total: 600.00
+- Sorted from lowest to highest:
+  1. Data Scientist: 0
+  2. ML Engineer: 0
+  3. Data Analyst: 0
+  4. Data Engineer: 0
+  5. Data Scientist: 50
+- Sorted from highest to lowest:
+  1. Data Scientist: 100
+  2. ML Engineer: 100
+  3. Data Analyst: 100
+  4. Data Engineer: 100
+  5. Data Scientist: 50
+
+### Year:
+- Lowest value: 2023 (for Data Scientist)
+- Highest value: 2023 (for Data Scientist)
+- Average: 2023.00
+- Total: 24276.00
+- Sorted from lowest to highest:
+  1. Data Scientist: 2023
+  2. Data Scientist: 2023
+  3. Data Scientist: 2023
+  4. ML Engineer: 2023
+  5. ML Engineer: 2023
+- Sorted from highest to lowest:
+  1. Data Scientist: 2023
+  2. Data Scientist: 2023
+  3. Data Scientist: 2023
+  4. ML Engineer: 2023
+  5. ML Engineer: 2023
+
+## Text Attributes:
+
+### Experience_Level:
+Unique values: Entry, Mid, Senior
+
+- Entries with Experience_Level = 'Entry':
+  • Data Scientist
+  • ML Engineer
+  • Data Analyst
+  • Data Engineer
+
+- Entries with Experience_Level = 'Mid':
+  • Data Scientist
+  • ML Engineer
+  • Data Analyst
+  • Data Engineer
+
+- Entries with Experience_Level = 'Senior':
+  • Data Scientist
+  • ML Engineer
+  • Data Analyst
+  • Data Engineer
+
+### Location:
+Unique values: USA
+
+- Entries with Location = 'USA':
+  • Data Scientist
+  • Data Scientist
+  • Data Scientist
+  • ML Engineer
+  • ML Engineer
+  ... and 7 more
+
+### Company_Size:
+Unique values: Small, Medium, Large
+
+- Entries with Company_Size = 'Small':
+  • Data Scientist
+  • ML Engineer
+  • Data Analyst
+  • Data Engineer
+
+- Entries with Company_Size = 'Medium':
+  • Data Scientist
+  • ML Engineer
+  • Data Analyst
+  • Data Engineer
+
+- Entries with Company_Size = 'Large':
+  • Data Scientist
+  • ML Engineer
+  • Data Analyst
+  • Data Engineer
+
+## Relationships between columns:
+
+- **Salary_USD** and **Remote_Ratio** are positively related (correlation: 0.86)
+  When Salary_USD increases, Remote_Ratio also tends to increase.
+
+## Common queries this table can answer:
+
+- How many Job_Title are in this table? Answer: 12
+- What are all the Job_Title? Answer: Data Scientist, Data Scientist, Data Scientist, ML Engineer, ML Engineer, ML Engineer, Data Analyst, Data Analyst, Data Analyst, Data Engineer, Data Engineer, Data Engineer
+- What is the highest Salary_USD? Answer: 155000 (for ML Engineer)
+- What is the lowest Salary_USD? Answer: 55000 (for Data Analyst)
+- What is the average Salary_USD? Answer: 98333.33
+- What is the highest Remote_Ratio? Answer: 100 (for Data Scientist)
+- What is the lowest Remote_Ratio? Answer: 0 (for Data Scientist)
+- What is the average Remote_Ratio? Answer: 50.00
+- What is the highest Year? Answer: 2023 (for Data Scientist)
+- What is the lowest Year? Answer: 2023 (for Data Scientist)
+- What is the average Year? Answer: 2023.00
+
+## Raw table data:
+
+```
+     Job_Title Experience_Level  Salary_USD Location Company_Size  Remote_Ratio  Year
+Data Scientist            Entry       65000      USA        Small             0  2023
+Data Scientist              Mid       95000      USA       Medium            50  2023
+Data Scientist           Senior      135000      USA        Large           100  2023
+   ML Engineer            Entry       75000      USA        Small             0  2023
+   ML Engineer              Mid      110000      USA       Medium            50  2023
+   ML Engineer           Senior      155000      USA        Large           100  2023
+  Data Analyst            Entry       55000      USA        Small             0  2023
+  Data Analyst              Mid       75000      USA       Medium            50  2023
+  Data Analyst           Senior       95000      USA        Large           100  2023
+ Data Engineer            Entry       70000      USA        Small             0  2023
+ Data Engineer              Mid      105000      USA       Medium            50  2023
+ Data Engineer           Senior      145000      USA        Large           100  2023
+```

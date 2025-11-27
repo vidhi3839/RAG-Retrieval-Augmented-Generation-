@@ -1,0 +1,9 @@
+Algorithm,Accuracy,Training_Speed,Prediction_Speed,Memory_Usage_MB,Interpretability,Overfitting_Risk
+Logistic Regression,0.85,Very Fast,Very Fast,10,High,Low
+Decision Tree,0.82,Fast,Very Fast,25,High,High
+Random Forest,0.91,Medium,Medium,150,Medium,Medium
+Gradient Boosting,0.93,Slow,Fast,200,Low,Medium
+SVM,0.89,Medium,Medium,80,Low,Medium
+Neural Network,0.94,Very Slow,Fast,500,Very Low,High
+KNN,0.87,Very Fast,Slow,50,Medium,Medium
+Naive Bayes,0.83,Very Fast,Very Fast,15,High,Low

@@ -1,0 +1,57 @@
+Python Code Snippets for Machine Learning
+
+Snippet 1: Train-Test Split
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+Snippet 2: Standardization
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+Snippet 3: Handling Missing Values
+import pandas as pd
+from sklearn.impute import SimpleImputer
+imputer = SimpleImputer(strategy='mean')
+X_imputed = imputer.fit_transform(X)
+
+Snippet 4: One-Hot Encoding
+from sklearn.preprocessing import OneHotEncoder
+encoder = OneHotEncoder(sparse=False)
+X_encoded = encoder.fit_transform(X_categorical)
+
+Snippet 5: Random Forest Classifier
+from sklearn.ensemble import RandomForestClassifier
+rf_model = RandomForestClassifier(n_estimators=100, max_depth=10, random_state=42)
+rf_model.fit(X_train, y_train)
+y_pred = rf_model.predict(X_test)
+
+Snippet 6: Grid Search Cross-Validation
+from sklearn.model_selection import GridSearchCV
+param_grid = {'n_estimators': [50, 100, 200], 'max_depth': [5, 10, 15]}
+grid_search = GridSearchCV(RandomForestClassifier(), param_grid, cv=5)
+grid_search.fit(X_train, y_train)
+print("Best parameters:", grid_search.best_params_)
+
+Snippet 7: Confusion Matrix
+from sklearn.metrics import confusion_matrix
+import seaborn as sns
+import matplotlib.pyplot as plt
+cm = confusion_matrix(y_test, y_pred)
+sns.heatmap(cm, annot=True, fmt='d')
+plt.show()
+
+Snippet 8: Feature Importance
+importances = rf_model.feature_importances_
+feature_importance_df = pd.DataFrame({'feature': feature_names, 'importance': importances})
+feature_importance_df = feature_importance_df.sort_values('importance', ascending=False)
+
+Snippet 9: Learning Curves
+from sklearn.model_selection import learning_curve
+train_sizes, train_scores, test_scores = learning_curve(model, X, y, cv=5, train_sizes=np.linspace(0.1, 1.0, 10))
+
+Snippet 10: Save and Load Model
+import joblib
+joblib.dump(model, 'model_filename.pkl')
+loaded_model = joblib.load('model_filename.pkl')

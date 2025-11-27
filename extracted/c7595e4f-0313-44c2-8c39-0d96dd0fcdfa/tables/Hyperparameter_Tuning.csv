@@ -1,0 +1,8 @@
+Model,Parameter,Value_1,Value_2,Value_3,Best_Value,Best_Score
+Random Forest,n_estimators,50.0,100.0,200.0,200.0,0.96
+Random Forest,max_depth,5.0,10.0,15.0,10.0,0.96
+SVM,C,0.1,1.0,10.0,1.0,0.94
+SVM,gamma,0.001,0.01,0.1,0.01,0.94
+Neural Net,learning_rate,0.001,0.01,0.1,0.01,0.93
+Neural Net,batch_size,16.0,32.0,64.0,32.0,0.93
+KNN,n_neighbors,3.0,5.0,10.0,5.0,0.92

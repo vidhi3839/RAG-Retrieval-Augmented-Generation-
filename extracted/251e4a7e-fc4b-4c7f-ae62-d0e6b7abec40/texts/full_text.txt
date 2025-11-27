@@ -1,0 +1,710 @@
+# Table: Algorithm_Comparison (Algorithm_Comparison.csv)
+
+This table contains 8 rows and 7 columns.
+
+## Columns in this table:
+1. Algorithm (text)
+2. Accuracy (numeric)
+3. Training_Speed (text)
+4. Prediction_Speed (text)
+5. Memory_Usage_MB (numeric)
+6. Interpretability (text)
+7. Overfitting_Risk (text)
+
+## Data entries (described row by row):
+
+**Logistic Regression**:
+  - Accuracy: 0.85
+  - Training_Speed: Very Fast
+  - Prediction_Speed: Very Fast
+  - Memory_Usage_MB: 10
+  - Interpretability: High
+  - Overfitting_Risk: Low
+
+**Decision Tree**:
+  - Accuracy: 0.82
+  - Training_Speed: Fast
+  - Prediction_Speed: Very Fast
+  - Memory_Usage_MB: 25
+  - Interpretability: High
+  - Overfitting_Risk: High
+
+**Random Forest**:
+  - Accuracy: 0.91
+  - Training_Speed: Medium
+  - Prediction_Speed: Medium
+  - Memory_Usage_MB: 150
+  - Interpretability: Medium
+  - Overfitting_Risk: Medium
+
+**Gradient Boosting**:
+  - Accuracy: 0.93
+  - Training_Speed: Slow
+  - Prediction_Speed: Fast
+  - Memory_Usage_MB: 200
+  - Interpretability: Low
+  - Overfitting_Risk: Medium
+
+**SVM**:
+  - Accuracy: 0.89
+  - Training_Speed: Medium
+  - Prediction_Speed: Medium
+  - Memory_Usage_MB: 80
+  - Interpretability: Low
+  - Overfitting_Risk: Medium
+
+**Neural Network**:
+  - Accuracy: 0.94
+  - Training_Speed: Very Slow
+  - Prediction_Speed: Fast
+  - Memory_Usage_MB: 500
+  - Interpretability: Very Low
+  - Overfitting_Risk: High
+
+**KNN**:
+  - Accuracy: 0.87
+  - Training_Speed: Very Fast
+  - Prediction_Speed: Slow
+  - Memory_Usage_MB: 50
+  - Interpretability: Medium
+  - Overfitting_Risk: Medium
+
+**Naive Bayes**:
+  - Accuracy: 0.83
+  - Training_Speed: Very Fast
+  - Prediction_Speed: Very Fast
+  - Memory_Usage_MB: 15
+  - Interpretability: High
+  - Overfitting_Risk: Low
+
+## Numeric Insights:
+
+### Accuracy:
+- Lowest value: 0.82 (for Decision Tree)
+- Highest value: 0.94 (for Neural Network)
+- Average: 0.88
+- Total: 7.04
+- Sorted from lowest to highest:
+  1. Decision Tree: 0.82
+  2. Naive Bayes: 0.83
+  3. Logistic Regression: 0.85
+  4. KNN: 0.87
+  5. SVM: 0.89
+- Sorted from highest to lowest:
+  1. Neural Network: 0.94
+  2. Gradient Boosting: 0.93
+  3. Random Forest: 0.91
+  4. SVM: 0.89
+  5. KNN: 0.87
+
+### Memory_Usage_MB:
+- Lowest value: 10 (for Logistic Regression)
+- Highest value: 500 (for Neural Network)
+- Average: 128.75
+- Total: 1030.00
+- Sorted from lowest to highest:
+  1. Logistic Regression: 10
+  2. Naive Bayes: 15
+  3. Decision Tree: 25
+  4. KNN: 50
+  5. SVM: 80
+- Sorted from highest to lowest:
+  1. Neural Network: 500
+  2. Gradient Boosting: 200
+  3. Random Forest: 150
+  4. SVM: 80
+  5. KNN: 50
+
+## Text Attributes:
+
+### Training_Speed:
+Unique values: Very Fast, Fast, Medium, Slow, Very Slow
+
+- Entries with Training_Speed = 'Very Fast':
+  • Logistic Regression
+  • KNN
+  • Naive Bayes
+
+- Entries with Training_Speed = 'Fast':
+  • Decision Tree
+
+- Entries with Training_Speed = 'Medium':
+  • Random Forest
+  • SVM
+
+- Entries with Training_Speed = 'Slow':
+  • Gradient Boosting
+
+- Entries with Training_Speed = 'Very Slow':
+  • Neural Network
+
+### Prediction_Speed:
+Unique values: Very Fast, Medium, Fast, Slow
+
+- Entries with Prediction_Speed = 'Very Fast':
+  • Logistic Regression
+  • Decision Tree
+  • Naive Bayes
+
+- Entries with Prediction_Speed = 'Medium':
+  • Random Forest
+  • SVM
+
+- Entries with Prediction_Speed = 'Fast':
+  • Gradient Boosting
+  • Neural Network
+
+- Entries with Prediction_Speed = 'Slow':
+  • KNN
+
+### Interpretability:
+Unique values: High, Medium, Low, Very Low
+
+- Entries with Interpretability = 'High':
+  • Logistic Regression
+  • Decision Tree
+  • Naive Bayes
+
+- Entries with Interpretability = 'Medium':
+  • Random Forest
+  • KNN
+
+- Entries with Interpretability = 'Low':
+  • Gradient Boosting
+  • SVM
+
+- Entries with Interpretability = 'Very Low':
+  • Neural Network
+
+### Overfitting_Risk:
+Unique values: Low, High, Medium
+
+- Entries with Overfitting_Risk = 'Low':
+  • Logistic Regression
+  • Naive Bayes
+
+- Entries with Overfitting_Risk = 'High':
+  • Decision Tree
+  • Neural Network
+
+- Entries with Overfitting_Risk = 'Medium':
+  • Random Forest
+  • Gradient Boosting
+  • SVM
+  • KNN
+
+## Relationships between columns:
+
+- **Accuracy** and **Memory_Usage_MB** are positively related (correlation: 0.81)
+  When Accuracy increases, Memory_Usage_MB also tends to increase.
+
+## Common queries this table can answer:
+
+- How many Algorithm are in this table? Answer: 8
+- What are all the Algorithm? Answer: Logistic Regression, Decision Tree, Random Forest, Gradient Boosting, SVM, Neural Network, KNN, Naive Bayes
+- What is the highest Accuracy? Answer: 0.94 (for Neural Network)
+- What is the lowest Accuracy? Answer: 0.82 (for Decision Tree)
+- What is the average Accuracy? Answer: 0.88
+- What is the highest Memory_Usage_MB? Answer: 500 (for Neural Network)
+- What is the lowest Memory_Usage_MB? Answer: 10 (for Logistic Regression)
+- What is the average Memory_Usage_MB? Answer: 128.75
+
+## Raw table data:
+
+```
+          Algorithm  Accuracy Training_Speed Prediction_Speed  Memory_Usage_MB Interpretability Overfitting_Risk
+Logistic Regression      0.85      Very Fast        Very Fast               10             High              Low
+      Decision Tree      0.82           Fast        Very Fast               25             High             High
+      Random Forest      0.91         Medium           Medium              150           Medium           Medium
+  Gradient Boosting      0.93           Slow             Fast              200              Low           Medium
+                SVM      0.89         Medium           Medium               80              Low           Medium
+     Neural Network      0.94      Very Slow             Fast              500         Very Low             High
+                KNN      0.87      Very Fast             Slow               50           Medium           Medium
+        Naive Bayes      0.83      Very Fast        Very Fast               15             High              Low
+```
+
+
+# Table: Dataset_Statistics (Dataset_Statistics.csv)
+
+This table contains 7 rows and 7 columns.
+
+## Columns in this table:
+1. Dataset_Name (text)
+2. Samples (numeric)
+3. Features (numeric)
+4. Classes (text)
+5. Missing_Values_Pct (numeric)
+6. Imbalanced (text)
+7. Domain (text)
+
+## Data entries (described row by row):
+
+**Iris**:
+  - Samples: 150
+  - Features: 4
+  - Classes: 3
+  - Missing_Values_Pct: 0
+  - Imbalanced: No
+  - Domain: Botany
+
+**Wine**:
+  - Samples: 178
+  - Features: 13
+  - Classes: 3
+  - Missing_Values_Pct: 0
+  - Imbalanced: No
+  - Domain: Chemistry
+
+**Breast Cancer**:
+  - Samples: 569
+  - Features: 30
+  - Classes: 2
+  - Missing_Values_Pct: 0
+  - Imbalanced: Yes
+  - Domain: Medical
+
+**Digits**:
+  - Samples: 1797
+  - Features: 64
+  - Classes: 10
+  - Missing_Values_Pct: 0
+  - Imbalanced: No
+  - Domain: Computer Vision
+
+**Diabetes**:
+  - Samples: 768
+  - Features: 8
+  - Classes: 2
+  - Missing_Values_Pct: 0
+  - Imbalanced: Yes
+  - Domain: Medical
+
+**Boston Housing**:
+  - Samples: 506
+  - Features: 13
+  - Classes: NA
+  - Missing_Values_Pct: 0
+  - Imbalanced: NA
+  - Domain: Real Estate
+
+**MNIST**:
+  - Samples: 70000
+  - Features: 784
+  - Classes: 10
+  - Missing_Values_Pct: 0
+  - Imbalanced: No
+  - Domain: Computer Vision
+
+## Numeric Insights:
+
+### Samples:
+- Lowest value: 150 (for Iris)
+- Highest value: 70000 (for MNIST)
+- Average: 10566.86
+- Total: 73968.00
+- Sorted from lowest to highest:
+  1. Iris: 150
+  2. Wine: 178
+  3. Boston Housing: 506
+  4. Breast Cancer: 569
+  5. Diabetes: 768
+- Sorted from highest to lowest:
+  1. MNIST: 70000
+  2. Digits: 1797
+  3. Diabetes: 768
+  4. Breast Cancer: 569
+  5. Boston Housing: 506
+
+### Features:
+- Lowest value: 4 (for Iris)
+- Highest value: 784 (for MNIST)
+- Average: 130.86
+- Total: 916.00
+- Sorted from lowest to highest:
+  1. Iris: 4
+  2. Diabetes: 8
+  3. Wine: 13
+  4. Boston Housing: 13
+  5. Breast Cancer: 30
+- Sorted from highest to lowest:
+  1. MNIST: 784
+  2. Digits: 64
+  3. Breast Cancer: 30
+  4. Wine: 13
+  5. Boston Housing: 13
+
+### Missing_Values_Pct:
+- Lowest value: 0 (for Iris)
+- Highest value: 0 (for Iris)
+- Average: 0.00
+- Total: 0.00
+- Sorted from lowest to highest:
+  1. Iris: 0
+  2. Wine: 0
+  3. Breast Cancer: 0
+  4. Digits: 0
+  5. Diabetes: 0
+- Sorted from highest to lowest:
+  1. Iris: 0
+  2. Wine: 0
+  3. Breast Cancer: 0
+  4. Digits: 0
+  5. Diabetes: 0
+
+## Text Attributes:
+
+### Classes:
+Unique values: 3, 2, 10, NA
+
+- Entries with Classes = '3':
+  • Iris
+  • Wine
+
+- Entries with Classes = '2':
+  • Breast Cancer
+  • Diabetes
+
+- Entries with Classes = '10':
+  • Digits
+  • MNIST
+
+- Entries with Classes = 'NA':
+  • Boston Housing
+
+### Imbalanced:
+Unique values: No, Yes, NA
+
+- Entries with Imbalanced = 'No':
+  • Iris
+  • Wine
+  • Digits
+  • MNIST
+
+- Entries with Imbalanced = 'Yes':
+  • Breast Cancer
+  • Diabetes
+
+- Entries with Imbalanced = 'NA':
+  • Boston Housing
+
+### Domain:
+Unique values: Botany, Chemistry, Medical, Computer Vision, Real Estate
+
+- Entries with Domain = 'Botany':
+  • Iris
+
+- Entries with Domain = 'Chemistry':
+  • Wine
+
+- Entries with Domain = 'Medical':
+  • Breast Cancer
+  • Diabetes
+
+- Entries with Domain = 'Computer Vision':
+  • Digits
+  • MNIST
+
+- Entries with Domain = 'Real Estate':
+  • Boston Housing
+
+## Relationships between columns:
+
+- **Samples** and **Features** are positively related (correlation: 1.00)
+  When Samples increases, Features also tends to increase.
+
+## Common queries this table can answer:
+
+- How many Dataset_Name are in this table? Answer: 7
+- What are all the Dataset_Name? Answer: Iris, Wine, Breast Cancer, Digits, Diabetes, Boston Housing, MNIST
+- What is the highest Samples? Answer: 70000 (for MNIST)
+- What is the lowest Samples? Answer: 150 (for Iris)
+- What is the average Samples? Answer: 10566.86
+- What is the highest Features? Answer: 784 (for MNIST)
+- What is the lowest Features? Answer: 4 (for Iris)
+- What is the average Features? Answer: 130.86
+- What is the highest Missing_Values_Pct? Answer: 0 (for Iris)
+- What is the lowest Missing_Values_Pct? Answer: 0 (for Iris)
+- What is the average Missing_Values_Pct? Answer: 0.00
+
+## Raw table data:
+
+```
+  Dataset_Name  Samples  Features Classes  Missing_Values_Pct Imbalanced          Domain
+          Iris      150         4       3                   0         No          Botany
+          Wine      178        13       3                   0         No       Chemistry
+ Breast Cancer      569        30       2                   0        Yes         Medical
+        Digits     1797        64      10                   0         No Computer Vision
+      Diabetes      768         8       2                   0        Yes         Medical
+Boston Housing      506        13      NA                   0         NA     Real Estate
+         MNIST    70000       784      10                   0         No Computer Vision
+```
+
+
+# Table: Cross_Validation_Results (Cross_Validation_Results.csv)
+
+This table contains 5 rows and 8 columns.
+
+## Columns in this table:
+1. Model (text)
+2. Fold_1 (numeric)
+3. Fold_2 (numeric)
+4. Fold_3 (numeric)
+5. Fold_4 (numeric)
+6. Fold_5 (numeric)
+7. Mean_CV_Score (numeric)
+8. Std_Dev (numeric)
+
+## Data entries (described row by row):
+
+**Random Forest**:
+  - Fold_1: 0.94
+  - Fold_2: 0.96
+  - Fold_3: 0.95
+  - Fold_4: 0.93
+  - Fold_5: 0.97
+  - Mean_CV_Score: 0.95
+  - Std_Dev: 0.015
+
+**SVM**:
+  - Fold_1: 0.92
+  - Fold_2: 0.93
+  - Fold_3: 0.91
+  - Fold_4: 0.94
+  - Fold_5: 0.92
+  - Mean_CV_Score: 0.924
+  - Std_Dev: 0.011
+
+**Logistic Reg**:
+  - Fold_1: 0.88
+  - Fold_2: 0.89
+  - Fold_3: 0.87
+  - Fold_4: 0.9
+  - Fold_5: 0.88
+  - Mean_CV_Score: 0.884
+  - Std_Dev: 0.011
+
+**Neural Net**:
+  - Fold_1: 0.93
+  - Fold_2: 0.95
+  - Fold_3: 0.92
+  - Fold_4: 0.94
+  - Fold_5: 0.96
+  - Mean_CV_Score: 0.94
+  - Std_Dev: 0.015
+
+**KNN**:
+  - Fold_1: 0.9
+  - Fold_2: 0.91
+  - Fold_3: 0.89
+  - Fold_4: 0.92
+  - Fold_5: 0.9
+  - Mean_CV_Score: 0.904
+  - Std_Dev: 0.011
+
+## Numeric Insights:
+
+### Fold_1:
+- Lowest value: 0.88 (for Logistic Reg)
+- Highest value: 0.94 (for Random Forest)
+- Average: 0.91
+- Total: 4.57
+- Sorted from lowest to highest:
+  1. Logistic Reg: 0.88
+  2. KNN: 0.9
+  3. SVM: 0.92
+  4. Neural Net: 0.93
+  5. Random Forest: 0.94
+- Sorted from highest to lowest:
+  1. Random Forest: 0.94
+  2. Neural Net: 0.93
+  3. SVM: 0.92
+  4. KNN: 0.9
+  5. Logistic Reg: 0.88
+
+### Fold_2:
+- Lowest value: 0.89 (for Logistic Reg)
+- Highest value: 0.96 (for Random Forest)
+- Average: 0.93
+- Total: 4.64
+- Sorted from lowest to highest:
+  1. Logistic Reg: 0.89
+  2. KNN: 0.91
+  3. SVM: 0.93
+  4. Neural Net: 0.95
+  5. Random Forest: 0.96
+- Sorted from highest to lowest:
+  1. Random Forest: 0.96
+  2. Neural Net: 0.95
+  3. SVM: 0.93
+  4. KNN: 0.91
+  5. Logistic Reg: 0.89
+
+### Fold_3:
+- Lowest value: 0.87 (for Logistic Reg)
+- Highest value: 0.95 (for Random Forest)
+- Average: 0.91
+- Total: 4.54
+- Sorted from lowest to highest:
+  1. Logistic Reg: 0.87
+  2. KNN: 0.89
+  3. SVM: 0.91
+  4. Neural Net: 0.92
+  5. Random Forest: 0.95
+- Sorted from highest to lowest:
+  1. Random Forest: 0.95
+  2. Neural Net: 0.92
+  3. SVM: 0.91
+  4. KNN: 0.89
+  5. Logistic Reg: 0.87
+
+### Fold_4:
+- Lowest value: 0.9 (for Logistic Reg)
+- Highest value: 0.94 (for SVM)
+- Average: 0.93
+- Total: 4.63
+- Sorted from lowest to highest:
+  1. Logistic Reg: 0.9
+  2. KNN: 0.92
+  3. Random Forest: 0.93
+  4. SVM: 0.94
+  5. Neural Net: 0.94
+- Sorted from highest to lowest:
+  1. SVM: 0.94
+  2. Neural Net: 0.94
+  3. Random Forest: 0.93
+  4. KNN: 0.92
+  5. Logistic Reg: 0.9
+
+### Fold_5:
+- Lowest value: 0.88 (for Logistic Reg)
+- Highest value: 0.97 (for Random Forest)
+- Average: 0.93
+- Total: 4.63
+- Sorted from lowest to highest:
+  1. Logistic Reg: 0.88
+  2. KNN: 0.9
+  3. SVM: 0.92
+  4. Neural Net: 0.96
+  5. Random Forest: 0.97
+- Sorted from highest to lowest:
+  1. Random Forest: 0.97
+  2. Neural Net: 0.96
+  3. SVM: 0.92
+  4. KNN: 0.9
+  5. Logistic Reg: 0.88
+
+### Mean_CV_Score:
+- Lowest value: 0.884 (for Logistic Reg)
+- Highest value: 0.95 (for Random Forest)
+- Average: 0.92
+- Total: 4.60
+- Sorted from lowest to highest:
+  1. Logistic Reg: 0.884
+  2. KNN: 0.904
+  3. SVM: 0.924
+  4. Neural Net: 0.94
+  5. Random Forest: 0.95
+- Sorted from highest to lowest:
+  1. Random Forest: 0.95
+  2. Neural Net: 0.94
+  3. SVM: 0.924
+  4. KNN: 0.904
+  5. Logistic Reg: 0.884
+
+### Std_Dev:
+- Lowest value: 0.011 (for SVM)
+- Highest value: 0.015 (for Random Forest)
+- Average: 0.01
+- Total: 0.06
+- Sorted from lowest to highest:
+  1. SVM: 0.011
+  2. Logistic Reg: 0.011
+  3. KNN: 0.011
+  4. Random Forest: 0.015
+  5. Neural Net: 0.015
+- Sorted from highest to lowest:
+  1. Random Forest: 0.015
+  2. Neural Net: 0.015
+  3. SVM: 0.011
+  4. Logistic Reg: 0.011
+  5. KNN: 0.011
+
+## Relationships between columns:
+
+- **Fold_1** and **Fold_2** are positively related (correlation: 0.99)
+  When Fold_1 increases, Fold_2 also tends to increase.
+- **Fold_1** and **Fold_3** are positively related (correlation: 0.97)
+  When Fold_1 increases, Fold_3 also tends to increase.
+- **Fold_1** and **Fold_4** are positively related (correlation: 0.86)
+  When Fold_1 increases, Fold_4 also tends to increase.
+- **Fold_1** and **Fold_5** are positively related (correlation: 0.97)
+  When Fold_1 increases, Fold_5 also tends to increase.
+- **Fold_1** and **Mean_CV_Score** are positively related (correlation: 1.00)
+  When Fold_1 increases, Mean_CV_Score also tends to increase.
+- **Fold_1** and **Std_Dev** are positively related (correlation: 0.80)
+  When Fold_1 increases, Std_Dev also tends to increase.
+- **Fold_2** and **Fold_3** are positively related (correlation: 0.97)
+  When Fold_2 increases, Fold_3 also tends to increase.
+- **Fold_2** and **Fold_4** are positively related (correlation: 0.81)
+  When Fold_2 increases, Fold_4 also tends to increase.
+- **Fold_2** and **Fold_5** are positively related (correlation: 0.99)
+  When Fold_2 increases, Fold_5 also tends to increase.
+- **Fold_2** and **Mean_CV_Score** are positively related (correlation: 1.00)
+  When Fold_2 increases, Mean_CV_Score also tends to increase.
+- **Fold_2** and **Std_Dev** are positively related (correlation: 0.86)
+  When Fold_2 increases, Std_Dev also tends to increase.
+- **Fold_3** and **Fold_4** are positively related (correlation: 0.72)
+  When Fold_3 increases, Fold_4 also tends to increase.
+- **Fold_3** and **Fold_5** are positively related (correlation: 0.96)
+  When Fold_3 increases, Fold_5 also tends to increase.
+- **Fold_3** and **Mean_CV_Score** are positively related (correlation: 0.97)
+  When Fold_3 increases, Mean_CV_Score also tends to increase.
+- **Fold_3** and **Std_Dev** are positively related (correlation: 0.81)
+  When Fold_3 increases, Std_Dev also tends to increase.
+- **Fold_4** and **Fold_5** are positively related (correlation: 0.75)
+  When Fold_4 increases, Fold_5 also tends to increase.
+- **Fold_4** and **Mean_CV_Score** are positively related (correlation: 0.83)
+  When Fold_4 increases, Mean_CV_Score also tends to increase.
+- **Fold_5** and **Mean_CV_Score** are positively related (correlation: 0.98)
+  When Fold_5 increases, Mean_CV_Score also tends to increase.
+- **Fold_5** and **Std_Dev** are positively related (correlation: 0.93)
+  When Fold_5 increases, Std_Dev also tends to increase.
+- **Mean_CV_Score** and **Std_Dev** are positively related (correlation: 0.84)
+  When Mean_CV_Score increases, Std_Dev also tends to increase.
+
+## Common queries this table can answer:
+
+- How many Model are in this table? Answer: 5
+- What are all the Model? Answer: Random Forest, SVM, Logistic Reg, Neural Net, KNN
+- What is the highest Fold_1? Answer: 0.94 (for Random Forest)
+- What is the lowest Fold_1? Answer: 0.88 (for Logistic Reg)
+- What is the average Fold_1? Answer: 0.91
+- What is the highest Fold_2? Answer: 0.96 (for Random Forest)
+- What is the lowest Fold_2? Answer: 0.89 (for Logistic Reg)
+- What is the average Fold_2? Answer: 0.93
+- What is the highest Fold_3? Answer: 0.95 (for Random Forest)
+- What is the lowest Fold_3? Answer: 0.87 (for Logistic Reg)
+- What is the average Fold_3? Answer: 0.91
+- What is the highest Fold_4? Answer: 0.94 (for SVM)
+- What is the lowest Fold_4? Answer: 0.9 (for Logistic Reg)
+- What is the average Fold_4? Answer: 0.93
+- What is the highest Fold_5? Answer: 0.97 (for Random Forest)
+- What is the lowest Fold_5? Answer: 0.88 (for Logistic Reg)
+- What is the average Fold_5? Answer: 0.93
+- What is the highest Mean_CV_Score? Answer: 0.95 (for Random Forest)
+- What is the lowest Mean_CV_Score? Answer: 0.884 (for Logistic Reg)
+- What is the average Mean_CV_Score? Answer: 0.92
+- What is the highest Std_Dev? Answer: 0.015 (for Random Forest)
+- What is the lowest Std_Dev? Answer: 0.011 (for SVM)
+- What is the average Std_Dev? Answer: 0.01
+
+## Raw table data:
+
+```
+        Model  Fold_1  Fold_2  Fold_3  Fold_4  Fold_5  Mean_CV_Score  Std_Dev
+Random Forest    0.94    0.96    0.95    0.93    0.97          0.950    0.015
+          SVM    0.92    0.93    0.91    0.94    0.92          0.924    0.011
+ Logistic Reg    0.88    0.89    0.87    0.90    0.88          0.884    0.011
+   Neural Net    0.93    0.95    0.92    0.94    0.96          0.940    0.015
+          KNN    0.90    0.91    0.89    0.92    0.90          0.904    0.011
+```
