@@ -322,7 +322,7 @@ def load_css():
 [data-testid="stFileUploader"] [data-testid="stFileUploaderDeleteBtn"] {
     color: #c62828 !important;
 }
-                .stFileUploader label,
+    .stFileUploader label,
     .stFileUploader small,
     .stFileUploader span,
     .stFileUploader div {
@@ -337,9 +337,7 @@ def load_css():
                 background-color: white !important;
         color: #133E87 !important;
         }
-    .st-e2 {
-    background-color: black !important;
-}       
+      
                                 </style>
     """, unsafe_allow_html=True)
 
@@ -695,11 +693,11 @@ def show_main_app():
                     st.markdown("###  Answer")
                     st.markdown(f"<div class='answer-box'>{result['answer']}</div>", unsafe_allow_html=True)
 
-                    if result["sources"]:
-                        st.markdown("###  Source Used")
-                        src = result["sources"][0]
-                        with st.expander(f" {src['filename']} (Page {src['page']})", expanded=True):
-                            st.text(src['content'])
+                    # if result["sources"]:
+                    #     st.markdown("###  Source Used")
+                    #     src = result["sources"][0]
+                    #     with st.expander(f" {src['filename']} (Page {src['page']})", expanded=True):
+                    #         st.text(src['content'])
 
                 except Exception as e:
                     st.error(f"Error: {e}")
@@ -744,6 +742,7 @@ def show_main_app():
                     new_chunks.extend(chunks)
 
                     log_document_to_db(doc_meta, len(chunks), username=st.session_state.display_name)
+                    log_chunks_to_db(chunks) 
                     
                 except Exception as e:
                     st.error(f"❌ Error processing {file.name}: {str(e)}")
@@ -795,16 +794,16 @@ def show_main_app():
         # Show question with metadata
             similarity = query.get('avg_similarity_score', 0)
             with st.expander(
-                f"Q{i}: {query['question'][:70]}... | {time_str}",
+                f"Q: {query['question'][:70]}... | {time_str}",
                 expanded=(i == 1)  # First question expanded by default
             ):
                 st.markdown(f"**Question:** {query['question']}")
                 st.markdown(f"**Answer:** {query['answer']}")
             
-                if sources:
-                    st.markdown(f"**Sources:**")
-                    for src in sources[:1]: 
-                        st.caption(f" {src.get('filename', 'Unknown')} (Page {src.get('page', 'N/A')}) ")
+                # if sources:
+                #     st.markdown(f"**Sources:**")
+                #     for src in sources[:1]: 
+                #         st.caption(f" {src.get('filename', 'Unknown')} (Page {src.get('page', 'N/A')}) ")
     else:
         st.info("No questions asked yet. Start by uploading documents and asking questions!")
 
