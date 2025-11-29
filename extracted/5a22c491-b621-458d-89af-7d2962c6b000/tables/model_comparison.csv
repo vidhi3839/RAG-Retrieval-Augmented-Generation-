@@ -1,9 +1,0 @@
-Model,Accuracy,Precision,Recall,F1_Score,Training_Time_sec,Inference_Time_ms,Memory_MB,Best_For
-Logistic Regression,0.89,0.87,0.91,0.89,0.5,2.1,15,Binary classification
-Decision Tree,0.82,0.8,0.85,0.82,0.3,1.5,25,Interpretability
-Random Forest,0.93,0.92,0.94,0.93,2.1,5.3,120,High accuracy
-SVM,0.91,0.9,0.92,0.91,1.8,3.2,80,High-dimensional data
-Neural Network,0.95,0.94,0.96,0.95,5.2,4.1,200,Complex patterns
-Naive Bayes,0.85,0.83,0.88,0.85,0.2,1.2,10,Text classification
-KNN,0.87,0.85,0.89,0.87,0.1,8.5,50,Small datasets
-Gradient Boosting,0.94,0.93,0.95,0.94,3.5,6.8,150,Structured data

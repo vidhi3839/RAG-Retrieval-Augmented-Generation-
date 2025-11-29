@@ -1,6 +1,0 @@
-Logic in Python (and pandas),,,
-<,Less than,!=,Not equal to
->,Greater than,df.column.isin(values),Group membership
-==,Equals,pd.isnull(obj),Is NaN
-<=,Less than or equals,pd.notnull(obj),Is not NaN
->=,Greater than or equals,"&,|,~,^,df.any(),df.all()","Logical and, or, not, xor, any, all"

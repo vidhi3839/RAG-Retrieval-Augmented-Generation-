@@ -1,6 +1,0 @@
-regex (Regular Expressions) Examples,
-'\.',Matches strings containing a period '.'
-'Length$',Matches strings ending with word 'Length'
-'^Sepal',Matches strings beginning with the word 'Sepal'
-'^x[1-5]$',"Matches strings beginning with 'x' and ending with 1,2,3,4,5"
-'^(?!Species$).*',Matches strings except the string 'Species'
