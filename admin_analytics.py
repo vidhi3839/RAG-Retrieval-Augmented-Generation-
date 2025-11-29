@@ -1,4 +1,3 @@
-# admin_analytics.py - FIXED VERSION
 import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
@@ -460,7 +459,7 @@ def plot_confidence_trends(df):
         return None
     
     fig = make_subplots(
-        rows=2, cols=1,
+        rows=2, cols=1,  # ✅ Need 2 rows
         subplot_titles=('Average Similarity Score Over Time', 'Success Rate Over Time'),
         vertical_spacing=0.15
     )
@@ -475,11 +474,15 @@ def plot_confidence_trends(df):
         row=2, col=1
     )
     
-    fig.update_xaxes(title_text="Date", row=2, col=1)
-    fig.update_yaxes(title_text="Similarity Score", row=1, col=1)
-    fig.update_yaxes(title_text="Success Rate (%)", row=2, col=1)
+    fig.update_xaxes(title_text="Cosine Similarity", row=1, col=1)
+    fig.update_yaxes(title_text="Frequency", row=1, col=1)
+    fig.update_yaxes(title_text="Cosine Similarity", row=2, col=1)
     
-    fig.update_layout(height=600, showlegend=True)
+    fig.update_layout(
+        height=800,
+        showlegend=False,
+        title_text="Cosine Similarity Analysis"
+    )
     return fig
 
 def plot_similarity_distribution(df):
@@ -489,15 +492,12 @@ def plot_similarity_distribution(df):
     
     # Create subplots
     fig = make_subplots(
-        rows=2, cols=2,
+        rows=2, cols=1, 
         subplot_titles=(
             'Cosine Similarity Distribution',
-            'Cosine Similarity by Bin',
             'Cosine Similarity Box Plot',
-            'Cumulative Distribution'
         ),
-        specs=[[{"type": "histogram"}, {"type": "bar"}],
-               [{"type": "box"}, {"type": "scatter"}]]
+        specs=[[{"type": "histogram"}], [{"type": "box"}]]
     )
     
     # 1. Histogram
@@ -512,21 +512,6 @@ def plot_similarity_distribution(df):
         row=1, col=1
     )
     
-    # 2. Bar chart by bins
-    bin_counts = df['similarity_bin'].value_counts().sort_index()
-    fig.add_trace(
-        go.Bar(
-            x=bin_counts.index.astype(str),
-            y=bin_counts.values,
-            name='Count by Bin',
-            marker_color='lightcoral',
-            text=bin_counts.values,
-            textposition='outside',
-            showlegend=False
-        ),
-        row=1, col=2
-    )
-    
     # 3. Box plot
     fig.add_trace(
         go.Box(
@@ -538,20 +523,6 @@ def plot_similarity_distribution(df):
         row=2, col=1
     )
     
-    # 4. Cumulative distribution
-    sorted_scores = np.sort(df['cosine_similarity'])
-    cumulative = np.arange(1, len(sorted_scores) + 1) / len(sorted_scores) * 100
-    fig.add_trace(
-        go.Scatter(
-            x=sorted_scores,
-            y=cumulative,
-            mode='lines',
-            name='Cumulative %',
-            line=dict(color='purple', width=2),
-            showlegend=False
-        ),
-        row=2, col=2
-    )
     
     # Update axes labels
     fig.update_xaxes(title_text="Cosine Similarity", row=1, col=1)
@@ -635,8 +606,8 @@ def show_admin_dashboard():
             st.metric("Total Queries", f"{metrics.get('total_queries', 0)}")
             st.metric("Error Rate", f"{metrics.get('error_rate', 0):.1f}%")
         
-        with col4:
-            st.metric("High Confidence Rate", f"{metrics.get('high_confidence_rate', 0):.1f}%")
+        # with col4:
+        #     st.metric("High Confidence Rate", f"{metrics.get('high_confidence_rate', 0):.1f}%")
     else:
         st.info("No data available yet. Start using the system to generate metrics!")
     
@@ -711,11 +682,10 @@ def show_admin_dashboard():
             with col1:
                 st.metric("Total Queries", success_metrics.get('total_queries', 0))
                 st.metric("Successful Queries", success_metrics.get('successful_queries', 0))
-                st.metric("Failed Queries", success_metrics.get('failed_queries', 0))
+                
             with col2:
+                st.metric("Failed Queries", success_metrics.get('failed_queries', 0))
                 st.metric("Success Rate", f"{success_metrics.get('success_rate', 0):.1f}%")
-                st.metric("Avg Sources Retrieved", f"{success_metrics.get('avg_sources_retrieved', 0):.2f}")
-                st.metric("High Confidence Queries", success_metrics.get('queries_with_high_confidence', 0))
         else:
             st.info("No data available yet")
     
@@ -748,9 +718,9 @@ def show_admin_dashboard():
             with col4:
                 st.metric("Max", f"{stats['max']:.3f}")
                 st.metric("Total Retrievals", f"{len(df6)}")
-            with col5:
-                st.metric("Very High (≥0.85)", f"{stats['very_high_count']}")
-                st.metric("High (0.7-0.85)", f"{stats['high_count']}")
+            # with col5:
+            #     st.metric("Very High (≥0.85)", f"{stats['very_high_count']}")
+            #     st.metric("High (0.7-0.85)", f"{stats['high_count']}")
             
             
             # Show detailed data
@@ -788,10 +758,10 @@ def show_admin_dashboard():
         with col3:
             st.metric("Error Rate", f"{error_stats.get('error_rate', 0):.1f}%")
         
-        if error_stats.get('errors_by_module'):
-            st.markdown("#### Errors by Module")
-            error_df = pd.DataFrame(list(error_stats['errors_by_module'].items()), 
-                                    columns=['Module', 'Error Count'])
-            fig = px.pie(error_df, values='Error Count', names='Module', 
-                        title='Error Distribution by Module')
-            st.plotly_chart(fig, use_container_width=True)
+        # if error_stats.get('errors_by_module'):
+        #     st.markdown("#### Errors by Module")
+        #     error_df = pd.DataFrame(list(error_stats['errors_by_module'].items()), 
+        #                             columns=['Module', 'Error Count'])
+        #     fig = px.pie(error_df, values='Error Count', names='Module', 
+        #                 title='Error Distribution by Module')
+        #     st.plotly_chart(fig, use_container_width=True)
