@@ -1,12 +1,8 @@
 import os
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
 load_dotenv()
 
-# ====== FIX FOR WINDOWS PATH ISSUES ======
-# Set cache directory to avoid Windows path escaping issues
-# This prevents the \n in usernames from being interpreted as newline
 CACHE_DIR = os.path.join(os.getcwd(), "model_cache")
 os.makedirs(CACHE_DIR, exist_ok=True)
 
@@ -15,14 +11,12 @@ os.environ['TRANSFORMERS_CACHE'] = CACHE_DIR
 os.environ['HF_HOME'] = CACHE_DIR
 os.environ['SENTENCE_TRANSFORMERS_HOME'] = CACHE_DIR
 
-# Paths - Use forward slashes for cross-platform compatibility
 BASE_DIR = "extracted"
 DOCS_INDEX_PATH = os.path.join(BASE_DIR, "docs_index.json")
 RAG_CHUNKS_PATH = os.path.join(BASE_DIR, "rag_chunks.json")
 FAISS_INDEX_PATH = os.path.join(BASE_DIR, "faiss_index.faiss")
 MAPPING_PATH = os.path.join(BASE_DIR, "index_mapping.json")
 
-# Subdirectories
 TEXTS_SUBDIR = "texts"
 TABLES_SUBDIR = "tables"
 IMAGES_SUBDIR = "images"
@@ -45,3 +39,4 @@ CAPTION_MODEL = "Salesforce/blip-image-captioning-large"
 LLM_MODEL = "gemini-2.5-flash"
 
 os.makedirs(BASE_DIR, exist_ok=True)
+
