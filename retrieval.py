@@ -1,4 +1,3 @@
-#retrieval.py
 import json
 import numpy as np
 import faiss
@@ -6,7 +5,6 @@ from sentence_transformers import SentenceTransformer
 from config import *
 import os
 
-# Global model (lazy loading)
 _embedding_model = None
 
 def get_embedding_model():
@@ -16,7 +14,7 @@ def get_embedding_model():
         _embedding_model = SentenceTransformer(EMBEDDING_MODEL)
     return _embedding_model
 
-# ==== OPTIMIZATION 5: INCREMENTAL FAISS INDEX (KEY FIX) ====
+# INCREMENTAL FAISS INDEX (KEY FIX) 
 def build_faiss_index(chunks, append=True):
     """
     Build or append to FAISS index.
@@ -36,7 +34,6 @@ def build_faiss_index(chunks, append=True):
         index = None
         existing_chunk_ids = []
     
-    # Extract new chunks only
     texts = [c["content"] for c in chunks]
     chunk_ids = [c["chunk_id"] for c in chunks]
     
@@ -45,8 +42,8 @@ def build_faiss_index(chunks, append=True):
         texts,
         convert_to_numpy=True,
         normalize_embeddings=True,
-        show_progress_bar=False,  # Disable progress bar for speed
-        batch_size=32  # Process in batches
+        show_progress_bar=False,  
+        batch_size=32  
     )
     embeddings = embeddings.astype('float32')
     
