@@ -7,7 +7,6 @@ import warnings
 warnings.filterwarnings('ignore')
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
-# Import your modules with error handling
 try:
     from ingestion import ingest_file, save_index_and_chunks
     from retrieval import build_faiss_index, load_faiss_index
@@ -22,7 +21,7 @@ except ImportError as e:
     st.error(f"Import Error: {e}")
     st.stop()
 
-# --- Page Config ---
+
 st.set_page_config(
     page_title="RAG Intelligence System",
     page_icon="🧠",
@@ -210,36 +209,37 @@ def load_css():
         color: #e3f2fd !important;
         border-color: #e3f2fd !important;
     }  
-                        .st-emotion-cache-qcpnpn button::after{
+        
+        .st-emotion-cache-qcpnpn button::after{
         width: 100px !important;
         color: #e3f2fd !important;
         border-color: #e3f2fd !important;
     }         
-    .st-emotion-cache-qcpnpn label{
-            color: #F3F3E0 !important;
-                }
+        .st-emotion-cache-qcpnpn label{
+        color: #F3F3E0 !important;
+    }
                 
        .st-emotion-cache-qcpnpn imput{
-            color: #091057 !important;
-                }  
+        color: #091057 !important;
+    }  
 
-    .st-eb:hover{
-                color: black !important;
-                }       
+       .st-eb:hover{
+        color: black !important;
+    }       
 
-    .st-ef {
-    background-color: black !important;
-}
-                .st-emotion-cache-14553y9{
-                color: white !important;
-                }
-.st-emotion-cache-14553y9 p:hover{
-                color: black !important;
-                }
+       .st-ef {
+       background-color: black !important;
+    }
+        .st-emotion-cache-14553y9{
+        color: white !important;
+    }
+        .st-emotion-cache-14553y9 p:hover{
+        color: black !important;
+    }
         .st-emotion-cache-kgpedg {
-                padding-top:30px !important;
-            }        
- /* Action buttons (Get Answer, Process Documents) - Gradient style */
+        padding-top:30px !important;
+    }        
+
     button[kind="primary"] {
         background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%) !important;
         color: #1565c0 !important;
@@ -263,7 +263,6 @@ def load_css():
     }
 
                 
-/* File Uploader - Styled like Answer Box */
 [data-testid="stFileUploader"] {
     background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%) !important;
     padding: 25px !important;
@@ -272,7 +271,7 @@ def load_css():
     margin: 15px 0 !important;
 }
 
-/* File uploader section */
+
 [data-testid="stFileUploader"] section {
     background: transparent !important;
     border: 2px dashed #42a5f5 !important;
@@ -280,14 +279,14 @@ def load_css():
     padding: 20px !important;
 }
 
-/* Drag and drop text */
+
 [data-testid="stFileUploader"] section small {
     color: #133E87 !important;
     font-size: 14px !important;
     font-weight: 500 !important;
 }
 
-/* Browse files button */
+
 [data-testid="stFileUploader"] section button {
     background: #133E87 !important;
     color: white !important;
@@ -306,19 +305,18 @@ def load_css():
     box-shadow: 0 4px 12px rgba(66, 165, 245, 0.3) !important;
 }
 
-/* File limit text */
+
 [data-testid="stFileUploader"] small {
     color: #133E87 !important;
     font-weight: 500 !important;
 }
 
-/* Uploaded file names */
 [data-testid="stFileUploader"] [data-testid="stFileUploaderFileName"] {
     color: #1565c0 !important;
     font-weight: 600 !important;
 }
 
-/* Delete button for uploaded files */
+
 [data-testid="stFileUploader"] [data-testid="stFileUploaderDeleteBtn"] {
     color: #c62828 !important;
 }
@@ -519,7 +517,7 @@ def show_auth_page():
         """, unsafe_allow_html=True)
 
 
-# --- Load Existing Data ---
+
 def load_existing_data():
     """Load all documents and chunks."""
     try:
@@ -570,14 +568,13 @@ def get_user_query_history(username, limit=None):
     except Exception as e:
         print(f"Error fetching query history: {e}")
         return []
-# --- Main App ---
 
+
+# --- Main App ---
 def show_main_app():
     st.markdown("""
     <style>
     
-          
-    /* Sidebar navigation buttons - LEFT ALIGNED */
     [data-testid="stSidebar"] .stButton button {
         text-align: center !important;
         justify-content: flex-start !important;
@@ -588,15 +585,12 @@ def show_main_app():
         color: #fff !important;
     }
     
-    /* Override center alignment for sidebar buttons */
     [data-testid="stSidebar"] .stButton {
         text-align: left !important;
     }
     
 
     </style>
-                
-    
 
     """, unsafe_allow_html=True)
     
@@ -693,12 +687,6 @@ def show_main_app():
                     st.markdown("###  Answer")
                     st.markdown(f"<div class='answer-box'>{result['answer']}</div>", unsafe_allow_html=True)
 
-                    # if result["sources"]:
-                    #     st.markdown("###  Source Used")
-                    #     src = result["sources"][0]
-                    #     with st.expander(f" {src['filename']} (Page {src['page']})", expanded=True):
-                    #         st.text(src['content'])
-
                 except Exception as e:
                     st.error(f"Error: {e}")
                     traceback.print_exc()
@@ -769,20 +757,19 @@ def show_main_app():
 
     st.markdown("##  All Your Questions")
 
-# Fetch all queries from database
+    # Fetch all queries from database
     user_queries = get_user_query_history(st.session_state.display_name)
 
     if user_queries:
         st.info(f" Total Questions: {len(user_queries)}")
     
         for i, query in enumerate(user_queries, 1):
-        # Parse sources from JSON string
+            # Parse sources from JSON string
             try:
                 sources = json.loads(query.get('sources', '[]')) if isinstance(query.get('sources'), str) else query.get('sources', [])
             except:
                 sources = []
         
-        # Format timestamp
             created_at = query.get('created_at', '')
             if created_at:
                 from datetime import datetime
@@ -791,19 +778,14 @@ def show_main_app():
             else:
                 time_str = ''
         
-        # Show question with metadata
+            # Show question with metadata
             similarity = query.get('avg_similarity_score', 0)
             with st.expander(
                 f"Q: {query['question'][:70]}... | {time_str}",
-                expanded=(i == 1)  # First question expanded by default
+                expanded=(i == 1) 
             ):
                 st.markdown(f"**Question:** {query['question']}")
                 st.markdown(f"**Answer:** {query['answer']}")
-            
-                # if sources:
-                #     st.markdown(f"**Sources:**")
-                #     for src in sources[:1]: 
-                #         st.caption(f" {src.get('filename', 'Unknown')} (Page {src.get('page', 'N/A')}) ")
     else:
         st.info("No questions asked yet. Start by uploading documents and asking questions!")
 
@@ -828,3 +810,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
