@@ -1,4 +1,3 @@
-# generation.py
 import google.generativeai as genai
 from config import *
 import time
@@ -55,7 +54,7 @@ def rag_pipeline(question, chunks, top_k=TOP_K, threshold=SIMILARITY_THRESHOLD, 
     start_time = time.time()
     
     try:
-        # Retrieval phase - pass user_doc_ids for filtering
+        # Retrieval phase
         retrieval = retrieve(query=question, chunks=chunks, top_k=top_k, threshold=threshold, user_doc_ids=user_doc_ids)
         
         if retrieval["answer"] == "Not available" or len(retrieval["evidence"]) == 0:
