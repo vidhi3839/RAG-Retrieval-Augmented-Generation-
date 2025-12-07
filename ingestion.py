@@ -1,10 +1,9 @@
-#ingestion.py
 import os
 import json
 import uuid
 import re
 from pathlib import Path
-import fitz  # pymupdf
+import fitz
 import pdfplumber
 from PIL import Image
 import pytesseract
@@ -16,8 +15,8 @@ from openpyxl import load_workbook
 from config import *
 import io
 
-# ==== OPTIMIZATION 1: Make image captioning OPTIONAL ====
-USE_IMAGE_CAPTIONING = False  # Set to False for speed
+
+USE_IMAGE_CAPTIONING = False  
 
 if USE_IMAGE_CAPTIONING:
     from transformers import BlipProcessor, BlipForConditionalGeneration
@@ -28,7 +27,7 @@ if USE_IMAGE_CAPTIONING:
     def get_caption_model():
         global _caption_processor, _caption_model
         if _caption_processor is None:
-            _caption_processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-base")  # Use base, not large
+            _caption_processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-base") 
             _caption_model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base").to("cpu")
         return _caption_processor, _caption_model
 
@@ -41,7 +40,7 @@ def table_to_natural_language(df, table_name):
     
     # Clean dataframe
     df = df.copy()
-    df = df.dropna(how='all')  # Remove completely empty rows
+    df = df.dropna(how='all')
     
     # Clean column names and cell values
     df.columns = df.columns.astype(str).str.strip()
@@ -53,21 +52,21 @@ def table_to_natural_language(df, table_name):
     text = f"# Table: {table_name}\n\n"
     text += f"This table contains {len(df)} rows and {len(df.columns)} columns.\n\n"
     
-    # === SECTION 1: Column Information ===
+    # Column Information ===
     text += "## Columns in this table:\n"
     for i, col in enumerate(df.columns, 1):
         col_type = "numeric" if pd.api.types.is_numeric_dtype(df[col]) else "text"
         text += f"{i}. {col} ({col_type})\n"
     text += "\n"
     
-    # === SECTION 2: Row-by-Row Description ===
+    # Row-by-Row Description ===
     text += "## Data entries (described row by row):\n\n"
     
-    # Identify the primary column (usually first column = entity/name)
+    # Identify the primary column
     primary_col = df.columns[0]
     
     for idx, row in df.iterrows():
-        # Start with primary identifier
+
         primary_value = row[primary_col]
         text += f"**{primary_value}**:\n"
         
@@ -79,7 +78,7 @@ def table_to_natural_language(df, table_name):
         
         text += "\n"
     
-    # === SECTION 3: Numeric Analysis (if applicable) ===
+    # Numeric Analysis ===
     numeric_cols = df.select_dtypes(include=['float64', 'int64']).columns.tolist()
     
     if numeric_cols:
@@ -89,7 +88,6 @@ def table_to_natural_language(df, table_name):
             if df[col].notna().any():
                 text += f"### {col}:\n"
                 
-                # Statistics
                 text += f"- Lowest value: {df[col].min()}"
                 min_entity = df.loc[df[col].idxmin(), primary_col]
                 text += f" (for {min_entity})\n"
@@ -101,7 +99,7 @@ def table_to_natural_language(df, table_name):
                 text += f"- Average: {df[col].mean():.2f}\n"
                 text += f"- Total: {df[col].sum():.2f}\n"
                 
-                # Sort by this column (both ascending and descending)
+                # Sort by this column 
                 df_sorted_asc = df.sort_values(by=col).dropna(subset=[col])
                 df_sorted_desc = df.sort_values(by=col, ascending=False).dropna(subset=[col])
                 
@@ -115,9 +113,9 @@ def table_to_natural_language(df, table_name):
                 
                 text += "\n"
     
-    # === SECTION 4: Text Analysis (if applicable) ===
+    # Text Analysis
     text_cols = df.select_dtypes(include=['object']).columns.tolist()
-    # Exclude primary column
+
     text_cols = [col for col in text_cols if col != primary_col]
     
     if text_cols:
@@ -125,7 +123,7 @@ def table_to_natural_language(df, table_name):
         
         for col in text_cols:
             unique_values = df[col].dropna().unique()
-            if len(unique_values) <= 20:  # Only if manageable
+            if len(unique_values) <= 20: 
                 text += f"### {col}:\n"
                 text += f"Unique values: {', '.join(map(str, unique_values))}\n\n"
                 
@@ -140,7 +138,7 @@ def table_to_natural_language(df, table_name):
                             text += f"  ... and {len(matching) - 5} more\n"
                         text += "\n"
     
-    # === SECTION 5: Relationship Patterns ===
+    #  Relationship Patterns 
     if len(numeric_cols) >= 2:
         text += "## Relationships between columns:\n\n"
         
@@ -151,7 +149,7 @@ def table_to_natural_language(df, table_name):
             for i, col1 in enumerate(numeric_cols):
                 for col2 in numeric_cols[i+1:]:
                     corr_value = corr_matrix.loc[col1, col2]
-                    if abs(corr_value) > 0.5:  # Significant correlation
+                    if abs(corr_value) > 0.5: 
                         if corr_value > 0:
                             text += f"- **{col1}** and **{col2}** are positively related (correlation: {corr_value:.2f})\n"
                             text += f"  When {col1} increases, {col2} also tends to increase.\n"
@@ -160,9 +158,9 @@ def table_to_natural_language(df, table_name):
                             text += f"  When {col1} increases, {col2} tends to decrease.\n"
             text += "\n"
         except:
-            pass  # Skip if correlation fails
+            pass 
     
-    # === SECTION 6: Question-Answering Hints ===
+    #  Question-Answering Hints 
     text += "## Common queries this table can answer:\n\n"
     
     # Generic questions
@@ -177,7 +175,7 @@ def table_to_natural_language(df, table_name):
     
     text += "\n"
     
-    # === SECTION 7: Raw Table (fallback) ===
+    # Raw Table 
     text += "## Raw table data:\n\n"
     text += "```\n"
     text += df.to_string(index=False, max_rows=50)
@@ -195,10 +193,9 @@ def generate_caption(image_path):
     try:
         processor, model = get_caption_model()
         raw_image = Image.open(image_path).convert('RGB')
-        # Resize image for faster processing
         raw_image.thumbnail((512, 512))
         inputs = processor(raw_image, return_tensors="pt").to(model.device)
-        out = model.generate(**inputs, max_new_tokens=30)  # Reduced tokens
+        out = model.generate(**inputs, max_new_tokens=30) 
         caption = processor.decode(out[0], skip_special_tokens=True)
         return caption
     except Exception as e:
@@ -232,31 +229,29 @@ def chunk_text_words(text, chunk_size=CHUNK_SIZE, overlap=CHUNK_OVERLAP):
         start += chunk_size - overlap
     return chunks
 
-# ==== OPTIMIZATION 2: Faster PDF extraction ====
+#  Faster PDF extraction 
 def extract_pdf(file_path, doc_dirs):
     """Extract text, tables, and images from PDF - OPTIMIZED."""
     text_joined = []
     tables_list = []
     image_paths = []
 
-    # Use only fitz for speed
+
     try:
         with fitz.open(file_path) as pdf:
             for i, page in enumerate(pdf):
                 page_num = i + 1
                 text = page.get_text("text")
                 
-                # Only OCR if page is COMPLETELY empty (not just low text)
+            
                 if len(text.strip()) < 5:
-                    pix = page.get_pixmap(dpi=150)  # Reduced DPI for speed
+                    pix = page.get_pixmap(dpi=150) 
                     img = Image.open(io.BytesIO(pix.tobytes()))
                     text = pytesseract.image_to_string(img)
                 
                 if text.strip():
                     text_joined.append({"page": page_num, "text": text})
-                
-                # ==== OPTIMIZATION 3: Skip image extraction for speed ====
-                # Comment out if you don't need images
+
                 """
                 for img_index, img in enumerate(page.get_images(full=True)):
                     xref = img[0]
@@ -272,7 +267,7 @@ def extract_pdf(file_path, doc_dirs):
     except Exception as e:
         print(f"PDF text extraction error: {e}")
 
-    # ==== OPTIMIZATION 4: Use fitz for tables (faster than pdfplumber) ====
+    # Use fitz for tables (faster than pdfplumber) 
     try:
         with fitz.open(file_path) as pdf:
             for i, page in enumerate(pdf):
@@ -300,7 +295,7 @@ def extract_docx(file_path, doc_dirs):
             if p.text.strip():
                 text_list.append({"page": 1, "text": p.text})
         
-        # Skip image extraction for speed
+
         """
         for i, rel in enumerate(doc.part.rels.values()):
             if "image" in rel.reltype:
@@ -325,7 +320,7 @@ def extract_csv(file_path, doc_dirs):
     try:
         df = pd.read_csv(file_path)
         
-        # Clean column names
+
         df.columns = df.columns.str.strip()
         
         csv_name = os.path.basename(file_path)
@@ -396,12 +391,12 @@ def ingest_file(file_bytes, filename, username=None):
     doc_id = str(uuid.uuid4())
     doc_dirs = ensure_doc_dirs(doc_id)
     
-    # Save uploaded file temporarily
+
     temp_path = os.path.join(doc_dirs["base"], filename)
     with open(temp_path, "wb") as f:
         f.write(file_bytes)
     
-    # Extract based on file type
+
     ext = os.path.splitext(filename)[1].lower()
     if ext == ".pdf":
         extracted = extract_pdf(temp_path, doc_dirs)
@@ -416,7 +411,6 @@ def ingest_file(file_bytes, filename, username=None):
     else:
         raise ValueError(f"Unsupported file type: {ext}")
     
-    # Build metadata
     # Build metadata
     doc_meta = {
         "doc_id": doc_id,
@@ -476,7 +470,7 @@ def ingest_file(file_bytes, filename, username=None):
             "csv_path": csv_path
         })
     
-    # Image chunks (optional - disabled for speed)
+
     for img in extracted.get("images", []):
         page_no = img.get("page", 1)
         path = img.get("path")
@@ -506,3 +500,4 @@ def save_index_and_chunks(docs_index, all_chunks):
         json.dump(docs_index, f, indent=2)
     with open(RAG_CHUNKS_PATH, "w", encoding="utf-8") as f:
         json.dump(all_chunks, f, indent=2)
+
