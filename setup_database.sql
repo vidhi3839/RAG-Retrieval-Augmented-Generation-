@@ -1,12 +1,7 @@
--- ============================================
--- RAG Intelligence System - Database Setup
--- ============================================
--- Instructions:
 -- 1. Open your Supabase project
 -- 2. Go to SQL Editor
 -- 3. Copy and paste this entire file
 -- 4. Click "Run" to create all tables
--- ============================================
 
 -- Table 1: Users
 CREATE TABLE IF NOT EXISTS users (
@@ -126,14 +121,3 @@ CREATE TABLE IF NOT EXISTS system_logs (
 CREATE INDEX idx_system_logs_type ON system_logs(log_type);
 CREATE INDEX idx_system_logs_module ON system_logs(module);
 CREATE INDEX idx_system_logs_created_at ON system_logs(created_at);
-
--- ============================================
--- Verification: Check that all tables were created
--- ============================================
-SELECT 
-    'Tables Created Successfully!' AS status,
-    COUNT(*) AS table_count
-FROM information_schema.tables 
-WHERE table_schema = 'public' 
-    AND table_type = 'BASE TABLE'
-    AND table_name IN ('users', 'sessions', 'documents', 'chunks', 'queries', 'retrieval_logs', 'system_logs');
