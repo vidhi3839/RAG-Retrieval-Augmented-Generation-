@@ -1,4 +1,3 @@
-# database.py
 from supabase import create_client, Client
 from config import *
 import os
@@ -28,7 +27,6 @@ def log_document_to_db(doc_meta, num_chunks, username=None):
         table_size = get_dir_size_kb(os.path.join(doc_dirs, "tables"))
         img_size = get_dir_size_kb(os.path.join(doc_dirs, "images"))
         
-        # Convert string UUID to UUID object if needed
         doc_id_uuid = doc_meta['doc_id'] if isinstance(doc_meta['doc_id'], str) else str(doc_meta['doc_id'])
         
         payload = {
@@ -47,7 +45,6 @@ def log_document_to_db(doc_meta, num_chunks, username=None):
         
         supabase.table("documents").insert(payload).execute()
         
-        # Log system event
         log_system_event("info", "ingestion", f"Document uploaded: {doc_meta['filename']}")
         return True
     except Exception as e:
@@ -62,7 +59,7 @@ def log_chunks_to_db(chunks):
         
         batch = []
         for chunk in chunks:
-            # Convert string UUID to proper format
+
             chunk_id_uuid = chunk["chunk_id"] if isinstance(chunk["chunk_id"], str) else str(chunk["chunk_id"])
             doc_id_uuid = chunk["doc_id"] if isinstance(chunk["doc_id"], str) else str(chunk["doc_id"])
             
@@ -76,7 +73,6 @@ def log_chunks_to_db(chunks):
             }
             batch.append(payload)
         
-        # Insert in batches of 100
         for i in range(0, len(batch), 100):
             supabase.table("chunks").insert(batch[i:i+100]).execute()
         
@@ -90,8 +86,7 @@ def log_query_to_db(question, answer, sources, username=None, latency_ms=0,
                     top_k=5, threshold=0.7, retrieval_success=True, error_message=None):
     """
     Log user query with comprehensive metrics.
-    
-    *** FIXED: Better handling of doc_id and username ***
+***
     """
     try:
         supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
@@ -99,7 +94,7 @@ def log_query_to_db(question, answer, sources, username=None, latency_ms=0,
         # Calculate metrics
         avg_similarity = sum(s.get('score', 0) for s in sources) / len(sources) if sources else 0
         
-        # Debug logging
+
         print(f"📝 Logging query - Username: {username}, Sources count: {len(sources)}")
         
         payload = {
@@ -115,7 +110,7 @@ def log_query_to_db(question, answer, sources, username=None, latency_ms=0,
             "avg_similarity_score": avg_similarity,
             "retrieval_success": retrieval_success,
             "error_message": error_message,
-            "username": username  # ← Make sure this is included
+            "username": username 
         }
         
         result = supabase.table("queries").insert(payload).execute()
@@ -172,3 +167,4 @@ def log_system_event(log_type, module, message, details=None):
     except Exception as e:
         print(f"System logging error: {e}")
         return False
+
