@@ -12,9 +12,8 @@ def get_supabase_client():
     """Get Supabase client."""
     return create_client(SUPABASE_URL, SUPABASE_KEY)
 
-# ============================================
+
 # SQL QUERY 1: Query Logs by Document Type
-# ============================================
 def get_queries_by_document_type():
     """Analyze queries by document type."""
     try:
@@ -51,12 +50,11 @@ def get_queries_by_document_type():
     except Exception as e:
         print(f"Error in get_queries_by_document_type: {e}")
         return pd.DataFrame()
-    
-# ============================================
+
+
 # SQL QUERY 2: Most Frequently Retrieved Files
-# ============================================
 def get_most_retrieved_documents():
-    """Get most frequently retrieved documents - FIXED VERSION."""
+    """Get most frequently retrieved documents"""
     try:
         supabase = get_supabase_client()
         
@@ -80,11 +78,10 @@ def get_most_retrieved_documents():
         print(f"Error in get_most_retrieved_documents: {e}")
         return pd.DataFrame()
 
-# ============================================
+
 # SQL QUERY 3: Average Latency by Query Length
-# ============================================
 def get_latency_by_query_length():
-    """Analyze latency by query length - FIXED VERSION."""
+    """Analyze latency by query length"""
     try:
         supabase = get_supabase_client()
         
@@ -115,11 +112,10 @@ def get_latency_by_query_length():
         print(f"Error in get_latency_by_query_length: {e}")
         return pd.DataFrame()
 
-# ============================================
+
 # SQL QUERY 4: Accuracy/Confidence Trends Over Time
-# ============================================
 def get_confidence_trends():
-    """Get similarity score trends over time - FIXED VERSION."""
+    """Get similarity score trends over time"""
     try:
         supabase = get_supabase_client()
         
@@ -149,11 +145,10 @@ def get_confidence_trends():
         print(f"Error in get_confidence_trends: {e}")
         return pd.DataFrame()
 
-# ============================================
+
 # SQL QUERY 5: Query Success Rate Analysis
-# ============================================
 def get_query_success_metrics():
-    """Calculate overall query success metrics - FIXED VERSION."""
+    """Calculate overall query success metrics"""
     try:
         supabase = get_supabase_client()
         
@@ -187,11 +182,10 @@ def get_query_success_metrics():
         print(f"Error in get_query_success_metrics: {e}")
         return {}
 
-# ============================================
+
 # SQL QUERY 6: Embedding Similarity Distribution
-# ============================================
 def get_similarity_distribution():
-    """Get distribution of similarity scores (cosine similarity) - ENHANCED VERSION."""
+    """Get distribution of cosine similarity scores"""
     try:
         supabase = get_supabase_client()
         
@@ -205,7 +199,7 @@ def get_similarity_distribution():
         df = pd.DataFrame(result.data)
         
         # Add cosine similarity bins for analysis
-        df['cosine_similarity'] = df['similarity_score']  # Clarify this is cosine similarity
+        df['cosine_similarity'] = df['similarity_score']  
         df['similarity_bin'] = pd.cut(
             df['cosine_similarity'],
             bins=[0, 0.3, 0.5, 0.7, 0.85, 1.0],
@@ -239,11 +233,11 @@ def get_cosine_similarity_stats(df):
         'very_low_count': len(df[df['cosine_similarity'] < 0.3])
     }
     return stats
-# ============================================
+
+
 # SQL QUERY 7: User Interaction Frequency
-# ============================================
 def get_user_interaction_stats():
-    """Analyze user interaction patterns - FIXED VERSION."""
+    """Analyze user interaction patterns"""
     try:
         supabase = get_supabase_client()
         
@@ -251,7 +245,7 @@ def get_user_interaction_stats():
         queries_result = supabase.table("queries").select("username, created_at").execute()
         queries_df = pd.DataFrame(queries_result.data) if queries_result.data else pd.DataFrame()
         
-        # Get documents per user - WITHOUT created_at since it doesn't exist
+        # Get documents per user
         docs_result = supabase.table("documents").select("uploaded_by").execute()
         docs_df = pd.DataFrame(docs_result.data) if docs_result.data else pd.DataFrame()
         
@@ -268,14 +262,14 @@ def get_user_interaction_stats():
         else:
             user_queries = pd.DataFrame(columns=['username', 'query_count', 'first_query', 'last_query'])
         
-        # Process documents - SIMPLIFIED
+        # Process documents
         if not docs_df.empty:
             user_docs = docs_df.groupby('uploaded_by').size().reset_index()
             user_docs.columns = ['username', 'docs_uploaded']
         else:
             user_docs = pd.DataFrame(columns=['username', 'docs_uploaded'])
         
-        # Merge
+
         if not user_queries.empty and not user_docs.empty:
             user_stats = pd.merge(user_queries, user_docs, on='username', how='outer').fillna(0)
         elif not user_queries.empty:
@@ -293,11 +287,10 @@ def get_user_interaction_stats():
         print(f"Error in get_user_interaction_stats: {e}")
         return pd.DataFrame()
     
-# ============================================
+
 # SQL QUERY 8: System Error/Fallback Frequency
-# ============================================
 def get_error_frequency():
-    """Analyze system errors and fallback patterns - FIXED VERSION."""
+    """Analyze system errors and fallback patterns"""
     try:
         supabase = get_supabase_client()
         
@@ -329,7 +322,6 @@ def get_error_frequency():
             error_stats['failed_queries'] = len(failed)
             error_stats['error_rate'] = (len(failed) / len(queries_df) * 100) if len(queries_df) > 0 else 0
             
-            # Error messages distribution
             if 'error_message' in failed.columns:
                 error_messages = failed['error_message'].dropna()
                 if not error_messages.empty:
@@ -347,11 +339,10 @@ def get_error_frequency():
             'error_rate': 0
         }
 
-# ============================================
+
 # EVALUATION METRICS
-# ============================================
 def calculate_evaluation_metrics():
-    """Calculate comprehensive evaluation metrics - FIXED VERSION."""
+    """Calculate comprehensive evaluation metrics"""
     try:
         supabase = get_supabase_client()
         
@@ -395,9 +386,8 @@ def calculate_evaluation_metrics():
         print(f"Error in calculate_evaluation_metrics: {e}")
         return {}
 
-# ============================================
+
 # VISUALIZATION FUNCTIONS
-# ============================================
 def plot_queries_by_doc_type(df):
     """Plot queries by document type."""
     if df.empty:
@@ -459,7 +449,7 @@ def plot_confidence_trends(df):
         return None
     
     fig = make_subplots(
-        rows=2, cols=1,  # ✅ Need 2 rows
+        rows=2, cols=1,  
         subplot_titles=('Average Similarity Score Over Time', 'Success Rate Over Time'),
         vertical_spacing=0.15
     )
@@ -575,9 +565,8 @@ def plot_user_interactions(df):
     
     return fig
 
-# ============================================
+
 # MAIN DASHBOARD FUNCTION
-# ============================================
 def show_admin_dashboard():
     """Main admin dashboard."""
     st.markdown("# Admin Analytics Dashboard")
@@ -606,8 +595,8 @@ def show_admin_dashboard():
             st.metric("Total Queries", f"{metrics.get('total_queries', 0)}")
             st.metric("Error Rate", f"{metrics.get('error_rate', 0):.1f}%")
         
-        # with col4:
-        #     st.metric("High Confidence Rate", f"{metrics.get('high_confidence_rate', 0):.1f}%")
+        with col4:
+            st.metric("High Confidence Rate", f"{metrics.get('high_confidence_rate', 0):.1f}%")
     else:
         st.info("No data available yet. Start using the system to generate metrics!")
     
@@ -698,10 +687,8 @@ def show_admin_dashboard():
             df6 = get_similarity_distribution()
         
         if not df6.empty:
-            # Enhanced visualization
             st.plotly_chart(plot_similarity_distribution(df6), use_container_width=True)
             
-            # Detailed statistics
             st.markdown("####  Cosine Similarity Statistics")
             stats = get_cosine_similarity_stats(df6)
             
@@ -718,9 +705,6 @@ def show_admin_dashboard():
             with col4:
                 st.metric("Max", f"{stats['max']:.3f}")
                 st.metric("Total Retrievals", f"{len(df6)}")
-            # with col5:
-            #     st.metric("Very High (≥0.85)", f"{stats['very_high_count']}")
-            #     st.metric("High (0.7-0.85)", f"{stats['high_count']}")
             
             
             # Show detailed data
@@ -758,10 +742,3 @@ def show_admin_dashboard():
         with col3:
             st.metric("Error Rate", f"{error_stats.get('error_rate', 0):.1f}%")
         
-        # if error_stats.get('errors_by_module'):
-        #     st.markdown("#### Errors by Module")
-        #     error_df = pd.DataFrame(list(error_stats['errors_by_module'].items()), 
-        #                             columns=['Module', 'Error Count'])
-        #     fig = px.pie(error_df, values='Error Count', names='Module', 
-        #                 title='Error Distribution by Module')
-        #     st.plotly_chart(fig, use_container_width=True)
