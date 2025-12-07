@@ -1,4 +1,3 @@
-# auth_db.py
 from supabase import create_client, Client
 from config import SUPABASE_URL, SUPABASE_KEY
 import hashlib
@@ -52,8 +51,7 @@ def verify_user(username, password):
         
         if user["password_hash"] != password_hash:
             return {"success": False, "error": "Incorrect password"}
-        
-        # Update last login
+
         supabase.table("users").update({
             "last_login": datetime.now().isoformat()
         }).eq("id", user["id"]).execute()
@@ -97,7 +95,7 @@ def validate_session(session_token):
         expires_at = datetime.fromisoformat(session["expires_at"].replace('Z', '+00:00'))
         
         if datetime.now(expires_at.tzinfo) > expires_at:
-            # Session expired, deactivate it
+            # Session expired.
             supabase.table("sessions").update({"is_active": False}).eq("id", session["id"]).execute()
             return {"valid": False, "error": "Session expired"}
         
